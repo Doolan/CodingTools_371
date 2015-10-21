@@ -17,14 +17,18 @@
     <div class="container">
         <div class="navbar-header">
 
-           <<a class="navbar-brand" href="#">
+           <a class="navbar-brand" href="#">
                 <img alt="Brand" src="../../Images/CodingToolsLogoNav.png" style="height: 2.5em; border-radius: 5px;" />
             </a>
 
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Tools</a></li>
+            <li>@*<a href="#">Home</a>*@
+                @Html.ActionLink("Home", "Index")
+            </li>
+            <li>
+                @Html.ActionLink("Tools", "List", "")
+            </li>
             <li><a href="#">About</a></li>
 
             <!-- <li><a href="#">Somewhere Else</a></li> -->
