@@ -22,14 +22,15 @@
             Jump to a list of all of our selected tools. Filter down the results by format, grade level, ranking and more!
         </p>
         <p>
-            <a class="btn btn-default" href="#">Go to List &raquo;</a>
+            @*<a class="btn btn-default" href="#">Go to List &raquo;</a>*@
+            @Html.ActionLink("Go to List", "List", "", new { @class = "btn btn-default" })
         </p>
     </div>
     <div class="col-md-4">
         <h2>Get Tailered Tools</h2>
         <p>Select your sitiuation and get tailored recomadations for your classrom.</p>
         <p>
-            <a class="btn btn-default" href="#">Get Fit &raquo;</a>
+            @Html.ActionLink("Get Fit", "Tailor", "", new {@class="btn btn-default"})
         </p>
     </div>
     <div class="col-md-4">
