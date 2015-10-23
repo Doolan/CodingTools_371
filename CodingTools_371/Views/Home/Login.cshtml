@@ -2,7 +2,31 @@
 @{
     ViewBag.Title = "Login";
 }
+<link rel="stylesheet" src="../../Content/Login.css"/>
 
 <h2>Login</h2>
 @*<p>Davis Code here</p>*@
+<div class="form-area">
+    <form data-example-id="simple-input-groups">
+        <div class="input-group input-group-lg" id="sizing-addon1">
+            <span class="input-group-addon" id="basic-addon1">Username</span>
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Username"></input>
+        </div>
+        <br></br>
 
+        <div class="input-group input-group-lg" id="sizing-addon1">
+            <span class="input-group-addon" id="basic-addon1">Password</span>
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Password"></input>
+        </div>
+        <br></br>
+
+        <div class="btn-group-lg btn-group-justified" role="group" aria-label="Justified button group">
+            <a href="account_creation.html" class="btn btn-default" role="button">Sign Up</a>
+            <a href="#" class="btn btn-default" role="button" id="login-but">Log In</a>
+        </div>
+        <!--<button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="login-but">
+            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+            Log in
+        </button>-->
+    </form>
+</div>
