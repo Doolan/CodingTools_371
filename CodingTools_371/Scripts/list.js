@@ -2,37 +2,22 @@
 var JSONFILEPATH_Filters = "../json/Filters.JSON";
 var KO_MODEL;
 $(document).ready(function () {
-    $('.datepicker').datepicker();
-    $.ajax({
-        dataType: "json",
-        url: JSONFILEPATH_MAIN,
-        success: function (data) {
-            window.KO_MODEL = new CodeModel(data);
+
+   // $.ajax({
+     //   dataType: "json",
+    //    url: JSONFILEPATH_MAIN,
+   //     success: function (data) {
+            window.KO_MODEL = new CodeModel(TASKJSON);
             ko.applyBindings(window.KO_MODEL);
             console.log('hit');
             console.log(window.KO_MODEL);
-        },
-        error: function (request, status, error) {
-            console.log('JSON file load unsuccessful', status, request, error);
-        }
-    });
-    $('#tech-select').select2({ placeholder: 'Filter by Technology' });
-    $('#grade-select').select2({ placeholder: 'Filter by Grade' });
+    //    },
+   //     error: function (request, status, error) {
+   //         console.log('JSON file load unsuccessful', status, request, error);
+   //     }
+ //   });
+
 });
-
-var loadFilters = function (success_func) {
-    $.ajax({
-        dataType: "json",
-        url: JSONFILEPATH_Filters,
-        success: function (data) {
-            success_func(data);
-        },
-        error: function (request, status, error) {
-            console.log('JSON file load unsuccessful', status, request, error);
-        }
-    });
-};
-
 
 //Filtering
 var filterArrayProperty = function (array, rowValue) {
@@ -95,16 +80,16 @@ var CodeModel = function (data) {
     self.grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     self.technology = ["Andriod", "Chomebook", "iPads", "Windows"];
     self.filters = ko.observableArray();
-    $.ajax({
-        dataType: "json",
-        url: JSONFILEPATH_Filters,
-        success: function (data) {
-            self.filters($.map(data, function (text) { return new FilterGroups(text) }));
-        },
-        error: function (request, status, error) {
-            console.log('JSON file load unsuccessful', status, request, error);
-        }
-    });
+   // $.ajax({
+   //     dataType: "json",
+   //     url: JSONFILEPATH_Filters,
+  //      success: function (data) {
+          self.filters($.map(FILTERJSON, function (text) { return new FilterGroups(text) }));
+  //      },
+ //       error: function (request, status, error) {
+ //           console.log('JSON file load unsuccessful', status, request, error);
+ //       }
+ //   });
 
 
 
@@ -130,3 +115,78 @@ var CodeModel = function (data) {
 
 };
 
+var TASKJSON = [
+    {
+        "name": "Codecademy",
+        "url": "www.codecademy.com",
+        "technology": ["Chomebook", "Windows"],
+        "grades": [9, 10, 11, 12]
+    },
+    {
+        "name": "code.org",
+        "url": "www.code.org",
+        "technology": ["Chomebook", "Windows"],
+        "grades": [1, 2, 3, 4, 5, 6]
+    },
+    {
+        "name": "Code Combat",
+        "url": "www.codecombat.com",
+        "technology": ["Chomebook", "Windows"],
+        "grades": [4, 5, 6]
+    },
+    {
+        "name": "HopScotch",
+        "url": "www.gethopscotch.com",
+        "technology": ["iPad"],
+        "grades": [2, 3, 4, 5]
+    }
+];
+
+var FILTERJSON = [
+    {
+        "name": "Grades",
+        "options": [
+            {
+                "name": "2nd and Under",
+                "values": [0, 1, 2]
+            },
+            {
+                "name": "3rd through 5th",
+                "values": [3, 4, 5]
+            },
+            {
+                "name": "6th and 8th",
+                "values": [6, 7, 8]
+            },
+            {
+                "name": "9th through 10th",
+                "values": [9, 10]
+            },
+            {
+                "name": "10th through 12th",
+                "values": [10, 11, 12]
+            }
+        ]
+    },
+    {
+        "name": "Technology",
+        "options": [
+            {
+                "name": "Android",
+                "values": ["Android"]
+            },
+            {
+                "name": "Chromebook",
+                "values": ["Chromebook"]
+            },
+            {
+                "name": "iPads",
+                "values": ["iPads"]
+            },
+            {
+                "name": "Windows",
+                "values": ["Windows"]
+            }
+        ]
+    }
+];

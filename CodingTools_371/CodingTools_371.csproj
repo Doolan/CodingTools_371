@@ -52,6 +52,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -175,8 +177,47 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CodingTools.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodingTools.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CodingTools.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CodingTools.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodingTools.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Review.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReviewTag.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tag.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TagCategory.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tool.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ToolTag.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User1.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -191,8 +232,25 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\CodingToolsLogoNav.png" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Models\CodingTools.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CodingTools.edmx</DependentUpon>
+      <LastGenOutput>CodingTools.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CodingTools.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CodingTools.edmx</DependentUpon>
+      <LastGenOutput>CodingTools.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\CodingTools.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CodingTools.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CodingTools.edmx.diagram">
+      <DependentUpon>CodingTools.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -258,6 +316,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
