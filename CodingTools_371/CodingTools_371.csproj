@@ -232,6 +232,10 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\CodingToolsLogoNav.png" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Images\Tailor\android.jpg" />
+    <Content Include="Images\Tailor\chromebook.jpg" />
+    <Content Include="Images\Tailor\iPad.jpg" />
+    <Content Include="Images\Tailor\windows.jpg" />
     <Content Include="Models\CodingTools.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CodingTools.edmx</DependentUpon>
@@ -264,6 +268,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\tailor.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

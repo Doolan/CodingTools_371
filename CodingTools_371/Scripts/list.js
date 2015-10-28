@@ -1,5 +1,5 @@
-﻿var JSONFILEPATH_MAIN = "../json/task.JSON";
-var JSONFILEPATH_Filters = "../json/Filters.JSON";
+﻿var JSONFILEPATH_MAIN = '../json/task.JSON';
+var JSONFILEPATH_Filters = '../json/Filters.JSON';
 var KO_MODEL;
 $(document).ready(function () {
 
@@ -61,11 +61,11 @@ var Task = function (text) {
 var FilterGroups = function (data) {
     var self = this;
     self.name = data.name;
-    self.options = ko.observableArray($.map(data.options, function (text) { return new Filter_Options(text) }));
+    self.options = ko.observableArray($.map(data.options, function (text) { return new FilterOptions(text) }));
 
 };
 
-var Filter_Options = function (data) {
+var FilterOptions = function (data) {
     var self = this;
     self.name = data.name;
     self.values = data.values;
@@ -78,7 +78,7 @@ var CodeModel = function (data) {
     self.gridData = ko.observableArray($.map(data, function (text) { return new Task(text) }));
     self.filterData = ko.observableArray($.map(data, function (text) { return new Task(text) }));
     self.grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    self.technology = ["Andriod", "Chomebook", "iPads", "Windows"];
+    self.technology = ['Andriod', 'Chomebook', 'iPads', 'Windows'];
     self.filters = ko.observableArray();
    // $.ajax({
    //     dataType: "json",
@@ -117,75 +117,75 @@ var CodeModel = function (data) {
 
 var TASKJSON = [
     {
-        "name": "Codecademy",
-        "url": "www.codecademy.com",
-        "technology": ["Chomebook", "Windows"],
+        "name": 'Codecademy',
+        "url": 'www.codecademy.com',
+        "technology": ['Chomebook', 'Windows'],
         "grades": [9, 10, 11, 12]
     },
     {
-        "name": "code.org",
-        "url": "www.code.org",
-        "technology": ["Chomebook", "Windows"],
+        "name": 'code.org',
+        "url": 'www.code.org',
+        "technology": ['Chomebook', 'Windows'],
         "grades": [1, 2, 3, 4, 5, 6]
     },
     {
-        "name": "Code Combat",
-        "url": "www.codecombat.com",
-        "technology": ["Chomebook", "Windows"],
+        "name": 'Code Combat',
+        "url": 'www.codecombat.com',
+        "technology": ['Chomebook', 'Windows'],
         "grades": [4, 5, 6]
     },
     {
-        "name": "HopScotch",
-        "url": "www.gethopscotch.com",
-        "technology": ["iPad"],
+        "name": 'HopScotch',
+        "url": 'www.gethopscotch.com',
+        "technology": ['iPad'],
         "grades": [2, 3, 4, 5]
     }
 ];
 
 var FILTERJSON = [
     {
-        "name": "Grades",
+        "name": 'Grades',
         "options": [
             {
-                "name": "2nd and Under",
+                "name": '2nd and Under',
                 "values": [0, 1, 2]
             },
             {
-                "name": "3rd through 5th",
+                "name": '3rd through 5th',
                 "values": [3, 4, 5]
             },
             {
-                "name": "6th and 8th",
+                "name": '6th and 8th',
                 "values": [6, 7, 8]
             },
             {
-                "name": "9th through 10th",
+                "name": '9th through 10th',
                 "values": [9, 10]
             },
             {
-                "name": "10th through 12th",
+                "name": '10th through 12th',
                 "values": [10, 11, 12]
             }
         ]
     },
     {
-        "name": "Technology",
+        "name": 'Technology',
         "options": [
             {
-                "name": "Android",
-                "values": ["Android"]
+                "name": 'Android',
+                "values": ['Android']
             },
             {
-                "name": "Chromebook",
-                "values": ["Chromebook"]
+                "name": 'Chromebook',
+                "values": ['Chromebook']
             },
             {
-                "name": "iPads",
-                "values": ["iPads"]
+                "name": 'iPads',
+                "values": ['iPads']
             },
             {
-                "name": "Windows",
-                "values": ["Windows"]
+                "name": 'Windows',
+                "values": ['Windows']
             }
         ]
     }
