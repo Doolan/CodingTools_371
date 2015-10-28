@@ -27,10 +27,10 @@ namespace CodingTools_371.Controllers
             return View();
         }
 
-        public ActionResult List()
-        {
-           return View();
-        }
+        //public ActionResult List()
+        //{
+        //   return View();
+        //}
 
         public ActionResult Tailor()
         {
