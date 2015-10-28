@@ -1,0 +1,521 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="codingtoolsdevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Reviews">
+          <Key>
+            <PropertyRef Name="ReviewId" />
+          </Key>
+          <Property Name="ReviewId" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="ToolID" Type="int" />
+          <Property Name="CreatorID" Type="int" />
+        </EntityType>
+        <EntityType Name="ReviewTags">
+          <Key>
+            <PropertyRef Name="ReviewTagsId" />
+          </Key>
+          <Property Name="ReviewTagsId" Type="int" Nullable="false" />
+          <Property Name="ReviewId" Type="int" />
+          <Property Name="TagId" Type="int" />
+        </EntityType>
+        <EntityType Name="TagCategories">
+          <Key>
+            <PropertyRef Name="TagCategoryId" />
+          </Key>
+          <Property Name="TagCategoryId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="TagCategoryId" Type="int" />
+        </EntityType>
+        <EntityType Name="Tools">
+          <Key>
+            <PropertyRef Name="ToolId" />
+          </Key>
+          <Property Name="ToolId" Type="int" Nullable="false" />
+          <Property Name="Url" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="ImgPath" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ToolTags">
+          <Key>
+            <PropertyRef Name="ToolTagsId" />
+          </Key>
+          <Property Name="ToolTagsId" Type="int" Nullable="false" />
+          <Property Name="ToolId" Type="int" />
+          <Property Name="TagId" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Username" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Username" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Reviews_ToTools">
+          <End Role="Tools" Type="Self.Tools" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tools">
+              <PropertyRef Name="ToolId" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ToolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_ToUsers">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="CreatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReviewTags_ToReviews">
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="0..1" />
+          <End Role="ReviewTags" Type="Self.ReviewTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reviews">
+              <PropertyRef Name="ReviewId" />
+            </Principal>
+            <Dependent Role="ReviewTags">
+              <PropertyRef Name="ReviewId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReviewTags_ToTags">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="0..1" />
+          <End Role="ReviewTags" Type="Self.ReviewTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="ReviewTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tags_ToCategories">
+          <End Role="TagCategories" Type="Self.TagCategories" Multiplicity="0..1" />
+          <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TagCategories">
+              <PropertyRef Name="TagCategoryId" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="TagCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ToolTags_ToTags">
+          <End Role="Tags" Type="Self.Tags" Multiplicity="0..1" />
+          <End Role="ToolTags" Type="Self.ToolTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="ToolTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ToolTags_ToTool">
+          <End Role="Tools" Type="Self.Tools" Multiplicity="0..1" />
+          <End Role="ToolTags" Type="Self.ToolTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tools">
+              <PropertyRef Name="ToolId" />
+            </Principal>
+            <Dependent Role="ToolTags">
+              <PropertyRef Name="ToolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="codingtoolsdevModelStoreContainer">
+          <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReviewTags" EntityType="Self.ReviewTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TagCategories" EntityType="Self.TagCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tools" EntityType="Self.Tools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ToolTags" EntityType="Self.ToolTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Reviews_ToTools" Association="Self.FK_Reviews_ToTools">
+            <End Role="Tools" EntitySet="Tools" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_ToUsers" Association="Self.FK_Reviews_ToUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewTags_ToReviews" Association="Self.FK_ReviewTags_ToReviews">
+            <End Role="Reviews" EntitySet="Reviews" />
+            <End Role="ReviewTags" EntitySet="ReviewTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewTags_ToTags" Association="Self.FK_ReviewTags_ToTags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="ReviewTags" EntitySet="ReviewTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tags_ToCategories" Association="Self.FK_Tags_ToCategories">
+            <End Role="TagCategories" EntitySet="TagCategories" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ToolTags_ToTags" Association="Self.FK_ToolTags_ToTags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="ToolTags" EntitySet="ToolTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ToolTags_ToTool" Association="Self.FK_ToolTags_ToTool">
+            <End Role="Tools" EntitySet="Tools" />
+            <End Role="ToolTags" EntitySet="ToolTags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="codingtoolsdevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="ReviewId" />
+          </Key>
+          <Property Name="ReviewId" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ToolID" Type="Int32" />
+          <Property Name="CreatorID" Type="Int32" />
+          <NavigationProperty Name="Tool" Relationship="Self.FK_Reviews_ToTools" FromRole="Reviews" ToRole="Tools" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Reviews_ToUsers" FromRole="Reviews" ToRole="Users" />
+          <NavigationProperty Name="ReviewTags" Relationship="Self.FK_ReviewTags_ToReviews" FromRole="Reviews" ToRole="ReviewTags" />
+        </EntityType>
+        <EntityType Name="ReviewTag">
+          <Key>
+            <PropertyRef Name="ReviewTagsId" />
+          </Key>
+          <Property Name="ReviewTagsId" Type="Int32" Nullable="false" />
+          <Property Name="ReviewId" Type="Int32" />
+          <Property Name="TagId" Type="Int32" />
+          <NavigationProperty Name="Review" Relationship="Self.FK_ReviewTags_ToReviews" FromRole="ReviewTags" ToRole="Reviews" />
+          <NavigationProperty Name="Tag" Relationship="Self.FK_ReviewTags_ToTags" FromRole="ReviewTags" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="TagCategory">
+          <Key>
+            <PropertyRef Name="TagCategoryId" />
+          </Key>
+          <Property Name="TagCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tags" Relationship="Self.FK_Tags_ToCategories" FromRole="TagCategories" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TagCategoryId" Type="Int32" />
+          <NavigationProperty Name="ReviewTags" Relationship="Self.FK_ReviewTags_ToTags" FromRole="Tags" ToRole="ReviewTags" />
+          <NavigationProperty Name="TagCategory" Relationship="Self.FK_Tags_ToCategories" FromRole="Tags" ToRole="TagCategories" />
+          <NavigationProperty Name="ToolTags" Relationship="Self.FK_ToolTags_ToTags" FromRole="Tags" ToRole="ToolTags" />
+        </EntityType>
+        <EntityType Name="Tool">
+          <Key>
+            <PropertyRef Name="ToolId" />
+          </Key>
+          <Property Name="ToolId" Type="Int32" Nullable="false" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImgPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_ToTools" FromRole="Tools" ToRole="Reviews" />
+          <NavigationProperty Name="ToolTags" Relationship="Self.FK_ToolTags_ToTool" FromRole="Tools" ToRole="ToolTags" />
+        </EntityType>
+        <EntityType Name="ToolTag">
+          <Key>
+            <PropertyRef Name="ToolTagsId" />
+          </Key>
+          <Property Name="ToolTagsId" Type="Int32" Nullable="false" />
+          <Property Name="ToolId" Type="Int32" />
+          <Property Name="TagId" Type="Int32" />
+          <NavigationProperty Name="Tag" Relationship="Self.FK_ToolTags_ToTags" FromRole="ToolTags" ToRole="Tags" />
+          <NavigationProperty Name="Tool" Relationship="Self.FK_ToolTags_ToTool" FromRole="ToolTags" ToRole="Tools" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User1">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_ToUsers" FromRole="Users" ToRole="Reviews" />
+        </EntityType>
+        <Association Name="FK_Reviews_ToTools">
+          <End Role="Tools" Type="Self.Tool" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tools">
+              <PropertyRef Name="ToolId" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ToolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_ToUsers">
+          <End Role="Users" Type="Self.User1" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="CreatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReviewTags_ToReviews">
+          <End Role="Reviews" Type="Self.Review" Multiplicity="0..1" />
+          <End Role="ReviewTags" Type="Self.ReviewTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reviews">
+              <PropertyRef Name="ReviewId" />
+            </Principal>
+            <Dependent Role="ReviewTags">
+              <PropertyRef Name="ReviewId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReviewTags_ToTags">
+          <End Role="Tags" Type="Self.Tag" Multiplicity="0..1" />
+          <End Role="ReviewTags" Type="Self.ReviewTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="ReviewTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tags_ToCategories">
+          <End Role="TagCategories" Type="Self.TagCategory" Multiplicity="0..1" />
+          <End Role="Tags" Type="Self.Tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TagCategories">
+              <PropertyRef Name="TagCategoryId" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="TagCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ToolTags_ToTags">
+          <End Role="Tags" Type="Self.Tag" Multiplicity="0..1" />
+          <End Role="ToolTags" Type="Self.ToolTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="ToolTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ToolTags_ToTool">
+          <End Role="Tools" Type="Self.Tool" Multiplicity="0..1" />
+          <End Role="ToolTags" Type="Self.ToolTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tools">
+              <PropertyRef Name="ToolId" />
+            </Principal>
+            <Dependent Role="ToolTags">
+              <PropertyRef Name="ToolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="codingtoolsdevEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Reviews" EntityType="Self.Review" />
+          <EntitySet Name="ReviewTags" EntityType="Self.ReviewTag" />
+          <EntitySet Name="TagCategories" EntityType="Self.TagCategory" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
+          <EntitySet Name="Tools" EntityType="Self.Tool" />
+          <EntitySet Name="ToolTags" EntityType="Self.ToolTag" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Users1" EntityType="Self.User1" />
+          <AssociationSet Name="FK_Reviews_ToTools" Association="Self.FK_Reviews_ToTools">
+            <End Role="Tools" EntitySet="Tools" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_ToUsers" Association="Self.FK_Reviews_ToUsers">
+            <End Role="Users" EntitySet="Users1" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewTags_ToReviews" Association="Self.FK_ReviewTags_ToReviews">
+            <End Role="Reviews" EntitySet="Reviews" />
+            <End Role="ReviewTags" EntitySet="ReviewTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewTags_ToTags" Association="Self.FK_ReviewTags_ToTags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="ReviewTags" EntitySet="ReviewTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tags_ToCategories" Association="Self.FK_Tags_ToCategories">
+            <End Role="TagCategories" EntitySet="TagCategories" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ToolTags_ToTags" Association="Self.FK_ToolTags_ToTags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="ToolTags" EntitySet="ToolTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ToolTags_ToTool" Association="Self.FK_ToolTags_ToTool">
+            <End Role="Tools" EntitySet="Tools" />
+            <End Role="ToolTags" EntitySet="ToolTags" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="codingtoolsdevModelStoreContainer" CdmEntityContainer="codingtoolsdevEntities">
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="codingtoolsdevModel.Review">
+              <MappingFragment StoreEntitySet="Reviews">
+                <ScalarProperty Name="ReviewId" ColumnName="ReviewId" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ToolID" ColumnName="ToolID" />
+                <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReviewTags">
+            <EntityTypeMapping TypeName="codingtoolsdevModel.ReviewTag">
+              <MappingFragment StoreEntitySet="ReviewTags">
+                <ScalarProperty Name="ReviewTagsId" ColumnName="ReviewTagsId" />
+                <ScalarProperty Name="ReviewId" ColumnName="ReviewId" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TagCategories">
+            <EntityTypeMapping TypeName="codingtoolsdevModel.TagCategory">
+              <MappingFragment StoreEntitySet="TagCategories">
+                <ScalarProperty Name="TagCategoryId" ColumnName="TagCategoryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="codingtoolsdevModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TagCategoryId" ColumnName="TagCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tools">
+            <EntityTypeMapping TypeName="codingtoolsdevModel.Tool">
+              <MappingFragment StoreEntitySet="Tools">
+                <ScalarProperty Name="ToolId" ColumnName="ToolId" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ToolTags">
+            <EntityTypeMapping TypeName="codingtoolsdevModel.ToolTag">
+              <MappingFragment StoreEntitySet="ToolTags">
+                <ScalarProperty Name="ToolTagsId" ColumnName="ToolTagsId" />
+                <ScalarProperty Name="ToolId" ColumnName="ToolId" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="codingtoolsdevModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users1">
+            <EntityTypeMapping TypeName="codingtoolsdevModel.User1">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

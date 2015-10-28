@@ -1,1 +1,79 @@
-﻿
+﻿@{
+    ViewBag.Title = "Tools";
+}
+
+<script src="../../Scripts/tailor.js"></script>
+<div class="container grade" style="padding-top: 3em" data-bind="if: gradeView">
+   
+    <h1 style="text-align: center; padding-bottom: 2em">Select a Grade</h1>
+    <div class="row" data-bind="foreach: gradeArray">
+        <div class="col-lg-4 col-md-6 col-xs-12" style="text-align: center; height: 5em; color: #FFFFFF">
+            <div class="btn button" data-bind="text:name, click: tailorAdvanceClick " style="margin: auto; height: 90%; width: 90%; background-color: #766e7e"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container grade" style="padding-top: 3em" data-bind="if: techView">
+    <h1 style="text-align: center; padding-bottom: 2em">Select Available Technology</h1>
+    <div class="row" data-bind="foreach: tech">
+        <div class="col-lg-3 col-md-6 col-xs-12" style="text-align: center;">
+            <div class="btn button" style="margin: auto;  width: 90%;" data-bind="click: tailorAdvanceClick">
+                <img style="max-width: 90%; max-height: 10em; display: block" src="#" data-bind="attr:{src: imgPath}">
+                <h4 style="text-align: center;" data-bind="text:name"></h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container list" style="padding-top: 3em" data-bind="if:listView">
+    <h1>Coding Tools <small>Teaching How to Code</small></h1>
+    <div class="row" style="padding-top: 2em">
+        <div class="col-lg-2 col-mi-4 col-sm-5" style="padding-top:1.0em">
+            <div class="panel panel-default">
+                <div class="panel-heading">Filters</div>
+                <div class="panel-body" >
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Grades</div>
+                        <div class="panel-body" data-bind="foreach: gradeArray">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" data-bind="checked: selected" />
+                                    <p data-bind="text:name, value: value"></p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Technology</div>
+                        <div class="panel-body" data-bind="foreach: tech">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" data-bind="checked: selected"/>
+                                    <p data-bind="text:name, value: value"></p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-10 col-mid-8 col-sm-7">
+            <div class="data-table-container container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr data-bind="foreach: headers">
+                            <th data-bind="click:  sort, text: title" style="cursor:pointer"></th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: listFilterData">
+                        <tr>
+                            <td class="row-name" data-bind="text: name"></td>
+                            <td class="row-url"><a data-bind="attr: {href: url}, text:url"></a> </td>
+                            <td class="row-technology" data-bind="text: technology"></td>
+                            <td class="row-grades" data-bind="text: grades"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
