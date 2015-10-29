@@ -41,5 +41,10 @@ namespace CodingTools_371.Controllers
         {
             return View();
         }
+
+        public ActionResult MakeReview()
+        {
+            return View();
+        }
     }
 }
