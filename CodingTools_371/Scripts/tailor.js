@@ -6,7 +6,17 @@ $(document).ready(function () {
     window.KO_MODEL = TailorMainModel({ "gradeArray": JSONGRADEARRAY, "technology": JSONTECHDATA, "toolList": JSONLISTDATA });
     ko.applyBindings(window.KO_MODEL);
 
-        
+    $.ajax({
+        url: 'GetToolList',
+        type: 'GET',
+        dataType:'JSON',
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(request, status, error) {
+            console.log('failed get', request, status, error);
+        }
+    });
 });
 
 

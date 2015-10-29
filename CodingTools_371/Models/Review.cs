@@ -23,11 +23,11 @@ namespace CodingTools_371.Models
         public int ReviewId { get; set; }
         public Nullable<decimal> Rating { get; set; }
         public string Content { get; set; }
-        public Nullable<int> ToolID { get; set; }
-        public Nullable<int> CreatorID { get; set; }
+        public int ToolID { get; set; }
+        public int CreatorID { get; set; }
     
         public virtual Tool Tool { get; set; }
-        public virtual User1 User { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReviewTag> ReviewTags { get; set; }
     }

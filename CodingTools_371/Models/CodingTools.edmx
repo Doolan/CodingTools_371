@@ -9,40 +9,41 @@
           <Key>
             <PropertyRef Name="ReviewId" />
           </Key>
-          <Property Name="ReviewId" Type="int" Nullable="false" />
+          <Property Name="ReviewId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Rating" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Content" Type="nvarchar(max)" />
-          <Property Name="ToolID" Type="int" />
-          <Property Name="CreatorID" Type="int" />
+          <Property Name="ToolID" Type="int" Nullable="false" />
+          <Property Name="CreatorID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ReviewTags">
           <Key>
             <PropertyRef Name="ReviewTagsId" />
           </Key>
-          <Property Name="ReviewTagsId" Type="int" Nullable="false" />
-          <Property Name="ReviewId" Type="int" />
-          <Property Name="TagId" Type="int" />
+          <Property Name="ReviewTagsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReviewId" Type="int" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TagCategories">
           <Key>
             <PropertyRef Name="TagCategoryId" />
           </Key>
-          <Property Name="TagCategoryId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="TagCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
             <PropertyRef Name="TagId" />
           </Key>
-          <Property Name="TagId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="TagCategoryId" Type="int" />
+          <Property Name="TagId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TagCategoryId" Type="int" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Tools">
           <Key>
             <PropertyRef Name="ToolId" />
           </Key>
-          <Property Name="ToolId" Type="int" Nullable="false" />
+          <Property Name="ToolId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Url" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="Description" Type="nvarchar(max)" />
@@ -52,32 +53,38 @@
           <Key>
             <PropertyRef Name="ToolTagsId" />
           </Key>
-          <Property Name="ToolTagsId" Type="int" Nullable="false" />
-          <Property Name="ToolId" Type="int" />
-          <Property Name="TagId" Type="int" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Email" Type="nvarchar(max)" />
-          <Property Name="Title" Type="nvarchar(max)" />
-          <Property Name="Username" Type="nvarchar" MaxLength="10" />
+          <Property Name="ToolTagsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ToolId" Type="int" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Email" Type="nvarchar(max)" />
           <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="Username" Type="nvarchar" MaxLength="10" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Tool_View">
+          <Key>
+            <PropertyRef Name="ToolID" />
+            <PropertyRef Name="URL" />
+          </Key>
+          <Property Name="ToolID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="URL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="ImgPath" Type="nvarchar(max)" />
+          <Property Name="TagName" Type="nvarchar(max)" />
+          <Property Name="TagValue" Type="nvarchar" MaxLength="10" />
+          <Property Name="CategoryName" Type="nvarchar(max)" />
+        </EntityType>
         <Association Name="FK_Reviews_ToTools">
-          <End Role="Tools" Type="Self.Tools" Multiplicity="0..1" />
+          <End Role="Tools" Type="Self.Tools" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tools">
@@ -89,7 +96,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_ToUsers">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -101,7 +108,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ReviewTags_ToReviews">
-          <End Role="Reviews" Type="Self.Reviews" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="1" />
           <End Role="ReviewTags" Type="Self.ReviewTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Reviews">
@@ -113,7 +120,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ReviewTags_ToTags">
-          <End Role="Tags" Type="Self.Tags" Multiplicity="0..1" />
+          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
           <End Role="ReviewTags" Type="Self.ReviewTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tags">
@@ -125,7 +132,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tags_ToCategories">
-          <End Role="TagCategories" Type="Self.TagCategories" Multiplicity="0..1" />
+          <End Role="TagCategories" Type="Self.TagCategories" Multiplicity="1" />
           <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TagCategories">
@@ -137,7 +144,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ToolTags_ToTags">
-          <End Role="Tags" Type="Self.Tags" Multiplicity="0..1" />
+          <End Role="Tags" Type="Self.Tags" Multiplicity="1" />
           <End Role="ToolTags" Type="Self.ToolTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tags">
@@ -149,7 +156,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ToolTags_ToTool">
-          <End Role="Tools" Type="Self.Tools" Multiplicity="0..1" />
+          <End Role="Tools" Type="Self.Tools" Multiplicity="1" />
           <End Role="ToolTags" Type="Self.ToolTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tools">
@@ -160,6 +167,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="get_ToolList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="codingtoolsdevModelStoreContainer">
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReviewTags" EntityType="Self.ReviewTags" Schema="dbo" store:Type="Tables" />
@@ -167,8 +175,19 @@
           <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tools" EntityType="Self.Tools" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ToolTags" EntityType="Self.ToolTags" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tool_View" EntityType="Self.Tool_View" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Tool_View].[ToolID] AS [ToolID], 
+    [Tool_View].[Name] AS [Name], 
+    [Tool_View].[URL] AS [URL], 
+    [Tool_View].[Description] AS [Description], 
+    [Tool_View].[ImgPath] AS [ImgPath], 
+    [Tool_View].[TagName] AS [TagName], 
+    [Tool_View].[TagValue] AS [TagValue], 
+    [Tool_View].[CategoryName] AS [CategoryName]
+    FROM [dbo].[Tool_View] AS [Tool_View]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Reviews_ToTools" Association="Self.FK_Reviews_ToTools">
             <End Role="Tools" EntitySet="Tools" />
             <End Role="Reviews" EntitySet="Reviews" />
@@ -207,11 +226,11 @@
           <Key>
             <PropertyRef Name="ReviewId" />
           </Key>
-          <Property Name="ReviewId" Type="Int32" Nullable="false" />
+          <Property Name="ReviewId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Rating" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ToolID" Type="Int32" />
-          <Property Name="CreatorID" Type="Int32" />
+          <Property Name="ToolID" Type="Int32" Nullable="false" />
+          <Property Name="CreatorID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tool" Relationship="Self.FK_Reviews_ToTools" FromRole="Reviews" ToRole="Tools" />
           <NavigationProperty Name="User" Relationship="Self.FK_Reviews_ToUsers" FromRole="Reviews" ToRole="Users" />
           <NavigationProperty Name="ReviewTags" Relationship="Self.FK_ReviewTags_ToReviews" FromRole="Reviews" ToRole="ReviewTags" />
@@ -220,9 +239,9 @@
           <Key>
             <PropertyRef Name="ReviewTagsId" />
           </Key>
-          <Property Name="ReviewTagsId" Type="Int32" Nullable="false" />
-          <Property Name="ReviewId" Type="Int32" />
-          <Property Name="TagId" Type="Int32" />
+          <Property Name="ReviewTagsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReviewId" Type="Int32" Nullable="false" />
+          <Property Name="TagId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Review" Relationship="Self.FK_ReviewTags_ToReviews" FromRole="ReviewTags" ToRole="Reviews" />
           <NavigationProperty Name="Tag" Relationship="Self.FK_ReviewTags_ToTags" FromRole="ReviewTags" ToRole="Tags" />
         </EntityType>
@@ -230,17 +249,18 @@
           <Key>
             <PropertyRef Name="TagCategoryId" />
           </Key>
-          <Property Name="TagCategoryId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TagCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Tags" Relationship="Self.FK_Tags_ToCategories" FromRole="TagCategories" ToRole="Tags" />
         </EntityType>
         <EntityType Name="Tag">
           <Key>
             <PropertyRef Name="TagId" />
           </Key>
-          <Property Name="TagId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TagCategoryId" Type="Int32" />
+          <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TagCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="ReviewTags" Relationship="Self.FK_ReviewTags_ToTags" FromRole="Tags" ToRole="ReviewTags" />
           <NavigationProperty Name="TagCategory" Relationship="Self.FK_Tags_ToCategories" FromRole="Tags" ToRole="TagCategories" />
           <NavigationProperty Name="ToolTags" Relationship="Self.FK_ToolTags_ToTags" FromRole="Tags" ToRole="ToolTags" />
@@ -249,7 +269,7 @@
           <Key>
             <PropertyRef Name="ToolId" />
           </Key>
-          <Property Name="ToolId" Type="Int32" Nullable="false" />
+          <Property Name="ToolId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -261,9 +281,9 @@
           <Key>
             <PropertyRef Name="ToolTagsId" />
           </Key>
-          <Property Name="ToolTagsId" Type="Int32" Nullable="false" />
-          <Property Name="ToolId" Type="Int32" />
-          <Property Name="TagId" Type="Int32" />
+          <Property Name="ToolTagsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToolId" Type="Int32" Nullable="false" />
+          <Property Name="TagId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Tag" Relationship="Self.FK_ToolTags_ToTags" FromRole="ToolTags" ToRole="Tags" />
           <NavigationProperty Name="Tool" Relationship="Self.FK_ToolTags_ToTool" FromRole="ToolTags" ToRole="Tools" />
         </EntityType>
@@ -271,25 +291,29 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Username" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="User1">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Username" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_ToUsers" FromRole="Users" ToRole="Reviews" />
         </EntityType>
+        <EntityType Name="Tool_View">
+          <Key>
+            <PropertyRef Name="ToolID" />
+            <PropertyRef Name="URL" />
+          </Key>
+          <Property Name="ToolID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImgPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TagName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TagValue" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         <Association Name="FK_Reviews_ToTools">
-          <End Role="Tools" Type="Self.Tool" Multiplicity="0..1" />
+          <End Role="Tools" Type="Self.Tool" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tools">
@@ -301,7 +325,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Reviews_ToUsers">
-          <End Role="Users" Type="Self.User1" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -313,7 +337,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ReviewTags_ToReviews">
-          <End Role="Reviews" Type="Self.Review" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Review" Multiplicity="1" />
           <End Role="ReviewTags" Type="Self.ReviewTag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Reviews">
@@ -325,7 +349,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ReviewTags_ToTags">
-          <End Role="Tags" Type="Self.Tag" Multiplicity="0..1" />
+          <End Role="Tags" Type="Self.Tag" Multiplicity="1" />
           <End Role="ReviewTags" Type="Self.ReviewTag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tags">
@@ -337,7 +361,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tags_ToCategories">
-          <End Role="TagCategories" Type="Self.TagCategory" Multiplicity="0..1" />
+          <End Role="TagCategories" Type="Self.TagCategory" Multiplicity="1" />
           <End Role="Tags" Type="Self.Tag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TagCategories">
@@ -349,7 +373,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ToolTags_ToTags">
-          <End Role="Tags" Type="Self.Tag" Multiplicity="0..1" />
+          <End Role="Tags" Type="Self.Tag" Multiplicity="1" />
           <End Role="ToolTags" Type="Self.ToolTag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tags">
@@ -361,7 +385,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ToolTags_ToTool">
-          <End Role="Tools" Type="Self.Tool" Multiplicity="0..1" />
+          <End Role="Tools" Type="Self.Tool" Multiplicity="1" />
           <End Role="ToolTags" Type="Self.ToolTag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tools">
@@ -380,13 +404,13 @@
           <EntitySet Name="Tools" EntityType="Self.Tool" />
           <EntitySet Name="ToolTags" EntityType="Self.ToolTag" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="Users1" EntityType="Self.User1" />
+          <EntitySet Name="Tool_View" EntityType="Self.Tool_View" />
           <AssociationSet Name="FK_Reviews_ToTools" Association="Self.FK_Reviews_ToTools">
             <End Role="Tools" EntitySet="Tools" />
             <End Role="Reviews" EntitySet="Reviews" />
           </AssociationSet>
           <AssociationSet Name="FK_Reviews_ToUsers" Association="Self.FK_Reviews_ToUsers">
-            <End Role="Users" EntitySet="Users1" />
+            <End Role="Users" EntitySet="Users" />
             <End Role="Reviews" EntitySet="Reviews" />
           </AssociationSet>
           <AssociationSet Name="FK_ReviewTags_ToReviews" Association="Self.FK_ReviewTags_ToReviews">
@@ -409,7 +433,18 @@
             <End Role="Tools" EntitySet="Tools" />
             <End Role="ToolTags" EntitySet="ToolTags" />
           </AssociationSet>
+          <FunctionImport Name="get_ToolList" ReturnType="Collection(codingtoolsdevModel.get_ToolList_Result)" />
         </EntityContainer>
+        <ComplexType Name="get_ToolList_Result">
+          <Property Type="Int32" Name="ToolID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="String" Name="URL" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ImgPath" Nullable="true" />
+          <Property Type="String" Name="TagName" Nullable="true" />
+          <Property Type="String" Name="TagValue" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="CategoryName" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -450,6 +485,7 @@
                 <ScalarProperty Name="TagId" ColumnName="TagId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TagCategoryId" ColumnName="TagCategoryId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -475,17 +511,6 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="codingtoolsdevModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users1">
-            <EntityTypeMapping TypeName="codingtoolsdevModel.User1">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -495,6 +520,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tool_View">
+            <EntityTypeMapping TypeName="codingtoolsdevModel.Tool_View">
+              <MappingFragment StoreEntitySet="Tool_View">
+                <ScalarProperty Name="ToolID" ColumnName="ToolID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="TagValue" ColumnName="TagValue" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="get_ToolList" FunctionName="codingtoolsdevModel.Store.get_ToolList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="codingtoolsdevModel.get_ToolList_Result">
+                <ScalarProperty Name="ToolID" ColumnName="ToolID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="TagValue" ColumnName="TagValue" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

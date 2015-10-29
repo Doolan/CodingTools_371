@@ -14,10 +14,19 @@ namespace CodingTools_371.Models
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Reviews = new HashSet<Review>();
+        }
+    
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Title { get; set; }
         public string Username { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Review> Reviews { get; set; }
     }
 }
