@@ -23,7 +23,8 @@ namespace CodingTools_371.Models
     
         public int TagId { get; set; }
         public string Name { get; set; }
-        public Nullable<int> TagCategoryId { get; set; }
+        public int TagCategoryId { get; set; }
+        public string Value { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReviewTag> ReviewTags { get; set; }

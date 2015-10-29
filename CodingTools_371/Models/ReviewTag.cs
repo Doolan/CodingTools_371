@@ -15,8 +15,8 @@ namespace CodingTools_371.Models
     public partial class ReviewTag
     {
         public int ReviewTagsId { get; set; }
-        public Nullable<int> ReviewId { get; set; }
-        public Nullable<int> TagId { get; set; }
+        public int ReviewId { get; set; }
+        public int TagId { get; set; }
     
         public virtual Review Review { get; set; }
         public virtual Tag Tag { get; set; }

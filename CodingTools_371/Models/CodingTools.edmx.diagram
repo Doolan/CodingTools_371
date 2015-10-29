@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ae3f57228c2c4e29a476ccd944c592a5" Name="Diagram1">
+      <Diagram DiagramId="161d3db856e9495f8288b5bdb6af8fd8" Name="Diagram1">
         <EntityTypeShape EntityType="codingtoolsdevModel.Review" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="codingtoolsdevModel.ReviewTag" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="codingtoolsdevModel.TagCategory" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="codingtoolsdevModel.Tag" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="codingtoolsdevModel.Tag" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="codingtoolsdevModel.Tool" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="codingtoolsdevModel.ToolTag" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="codingtoolsdevModel.User" Width="1.5" PointX="5.75" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="codingtoolsdevModel.User1" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="codingtoolsdevModel.User" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="codingtoolsdevModel.Tool_View" Width="1.5" PointX="5.75" PointY="7.125" IsExpanded="true" />
         <AssociationConnector Association="codingtoolsdevModel.FK_Reviews_ToTools" ManuallyRouted="false" />
         <AssociationConnector Association="codingtoolsdevModel.FK_Reviews_ToUsers" ManuallyRouted="false" />
         <AssociationConnector Association="codingtoolsdevModel.FK_ReviewTags_ToReviews" ManuallyRouted="false" />

@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using CodingTools_371.Models;
 
 namespace CodingTools_371.Controllers
 {
@@ -41,6 +45,72 @@ namespace CodingTools_371.Controllers
         {
             return View();
         }
+
+        #region AJAX CALLS
+
+        [HttpGet]
+        public string GetToolList()
+        {
+            var db = new codingtoolsdevEntities();
+            var list = db.get_ToolList().ToList();
+            var humanid = 0;
+            return new JavaScriptSerializer().Serialize(ToolListHelper(list));
+        }
+
+        private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
+        {
+            var cToolID = 0;
+            var cTagValue = "";
+            var cCategoryName = "";
+            var returnList = new List<ListModel.GetListModel>();
+            ListModel.GetListModel cModel = null;
+            var cCategoryList = new List<ListModel.ToolCategoryGroup>();
+            ListModel.ToolCategoryGroup cCatGroup= null;
+            var tagList = new List<ListModel.ToolTagObject>();
+
+            foreach (var row in list)
+            {
+                if (cToolID != row.ToolID)
+                {
+                    if (cToolID != 0)
+                    {
+                        cCatGroup.Tags = tagList;
+                        cCategoryList.Add(cCatGroup);
+                        cModel.Tags = cCategoryList;
+                        returnList.Add(cModel);
+                    }
+                    cModel = new ListModel.GetListModel
+                    {
+                        ToolId = row.ToolID,
+                        Name = row.Name,
+                        Url = row.URL,
+                        Description = row.Description
+                    };
+                    cToolID = row.ToolID;
+                    cCategoryName = row.CategoryName;
+                    //cModel = new ListModel.GetListModel();
+                    cCategoryList = new List<ListModel.ToolCategoryGroup>();
+                    cCatGroup = new ListModel.ToolCategoryGroup {CategoryName = row.CategoryName};
+                    tagList = new List<ListModel.ToolTagObject> { new ListModel.ToolTagObject { TagName = row.TagName, TagValue = row.TagValue} };
+                }
+                else if (cCategoryName != row.CategoryName)
+                {
+                    cCategoryName = row.CategoryName;
+                    cCatGroup.Tags = tagList;
+                    cCategoryList.Add(cCatGroup);
+                    cCatGroup = new ListModel.ToolCategoryGroup {CategoryName = row.CategoryName};
+                    tagList = new List<ListModel.ToolTagObject> { new ListModel.ToolTagObject { TagName = row.TagName } };
+                }
+                else
+                {
+                    tagList.Add(new ListModel.ToolTagObject { TagName = row.TagName, TagValue = row.TagValue});
+                    
+                }
+            }
+            return returnList;
+        }
+
+#endregion
 
     }
 }

@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -192,7 +196,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CodingTools.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\get_ToolList_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ListModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Review.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
@@ -212,10 +220,10 @@
     <Compile Include="Models\ToolTag.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\User.cs">
+    <Compile Include="Models\Tool_View.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\User1.cs">
+    <Compile Include="Models\User.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
