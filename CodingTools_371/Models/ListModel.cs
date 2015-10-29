@@ -19,7 +19,13 @@ namespace CodingTools_371.Models
         public class ToolCategoryGroup
         {
             public string CategoryName { get; set; }
-            public List<Tag> Tags { get; set; }
+            public List<ToolTagObject> Tags { get; set; }
+        }
+
+        public class ToolTagObject
+        {
+            public string TagName;
+            public string TagValue;
         }
 
         

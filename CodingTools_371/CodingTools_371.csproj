@@ -200,6 +200,7 @@
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ListModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Review.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>

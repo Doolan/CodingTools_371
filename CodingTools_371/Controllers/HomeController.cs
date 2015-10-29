@@ -52,9 +52,9 @@ namespace CodingTools_371.Controllers
         public string GetToolList()
         {
             var db = new codingtoolsdevEntities();
-            List<get_ToolList_Result> list = db.get_ToolList().ToList();
+            var list = db.get_ToolList().ToList();
             var humanid = 0;
-            return new JavaScriptSerializer().Serialize(humanid);
+            return new JavaScriptSerializer().Serialize(ToolListHelper(list));
         }
 
         private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
@@ -66,7 +66,7 @@ namespace CodingTools_371.Controllers
             ListModel.GetListModel cModel = null;
             var cCategoryList = new List<ListModel.ToolCategoryGroup>();
             ListModel.ToolCategoryGroup cCatGroup= null;
-            var tagList = new List<Tag>();
+            var tagList = new List<ListModel.ToolTagObject>();
 
             foreach (var row in list)
             {
@@ -86,13 +86,28 @@ namespace CodingTools_371.Controllers
                         Url = row.URL,
                         Description = row.Description
                     };
-                    cModel = new ListModel.GetListModel();
+                    cToolID = row.ToolID;
+                    cCategoryName = row.CategoryName;
+                    //cModel = new ListModel.GetListModel();
                     cCategoryList = new List<ListModel.ToolCategoryGroup>();
                     cCatGroup = new ListModel.ToolCategoryGroup {CategoryName = row.CategoryName};
-                    tagList = new List<Tag>();
-                    tagList.Add(new Tag {Name = row.TagName });
+                    tagList = new List<ListModel.ToolTagObject> { new ListModel.ToolTagObject { TagName = row.TagName, TagValue = row.TagValue} };
+                }
+                else if (cCategoryName != row.CategoryName)
+                {
+                    cCategoryName = row.CategoryName;
+                    cCatGroup.Tags = tagList;
+                    cCategoryList.Add(cCatGroup);
+                    cCatGroup = new ListModel.ToolCategoryGroup {CategoryName = row.CategoryName};
+                    tagList = new List<ListModel.ToolTagObject> { new ListModel.ToolTagObject { TagName = row.TagName } };
+                }
+                else
+                {
+                    tagList.Add(new ListModel.ToolTagObject { TagName = row.TagName, TagValue = row.TagValue});
+                    
                 }
             }
+            return returnList;
         }
 
 #endregion
