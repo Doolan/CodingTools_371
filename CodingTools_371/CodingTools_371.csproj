@@ -246,6 +246,7 @@
     <Content Include="Views\Home\Tailor.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\MakeReview.cshtml" />
+    <Content Include="Views\Home\MakeAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

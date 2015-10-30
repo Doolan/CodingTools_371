@@ -46,5 +46,10 @@ namespace CodingTools_371.Controllers
         {
             return View();
         }
+
+        public ActionResult MakeAccount()
+        {
+            return View();
+        }
     }
 }
