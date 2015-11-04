@@ -44,10 +44,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -56,8 +52,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -181,55 +175,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\CodingTools.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CodingTools.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CodingTools.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CodingTools.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CodingTools.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\get_ToolList_Result.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ListModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Review.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ReviewTag.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Tag.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TagCategory.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Tool.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ToolTag.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Tool_View.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Login.css" />
     <Content Include="Images\CodingToolsIcon.png" />
     <Content Include="Images\CodingToolsLogo.png" />
     <Content Include="Content\bootstrap.css" />
@@ -240,29 +192,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\CodingToolsLogoNav.png" />
     <Content Include="Images\favicon.ico" />
-    <Content Include="Images\Tailor\android.jpg" />
-    <Content Include="Images\Tailor\chromebook.jpg" />
-    <Content Include="Images\Tailor\iPad.jpg" />
-    <Content Include="Images\Tailor\windows.jpg" />
-    <Content Include="Models\CodingTools.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CodingTools.edmx</DependentUpon>
-      <LastGenOutput>CodingTools.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\CodingTools.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CodingTools.edmx</DependentUpon>
-      <LastGenOutput>CodingTools.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\CodingTools.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CodingTools.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\CodingTools.edmx.diagram">
-      <DependentUpon>CodingTools.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -271,11 +202,10 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\tailor.js" />
+    <Content Include="Scripts\ViewReview.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -313,8 +243,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\List.cshtml" />
     <Content Include="Views\Home\Tailor.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\MakeReview.cshtml" />
+    <Content Include="Views\Home\MakeAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -327,9 +260,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
