@@ -27,10 +27,6 @@ namespace CodingTools_371.Models
             public string TagName;
             public string TagValue;
         }
-
-        
-        
-
     }
 
     

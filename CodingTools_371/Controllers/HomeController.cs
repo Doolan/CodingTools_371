@@ -53,14 +53,13 @@ namespace CodingTools_371.Controllers
         {
             var db = new codingtoolsdevEntities();
             var list = db.get_ToolList().ToList();
-            var humanid = 0;
-            return new JavaScriptSerializer().Serialize(ToolListHelper(list));
+            var toolList = ToolListHelper(list);
+            return new JavaScriptSerializer().Serialize(toolList);
         }
 
         private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
         {
-            var cToolID = 0;
-            var cTagValue = "";
+            var cToolId = 0;
             var cCategoryName = "";
             var returnList = new List<ListModel.GetListModel>();
             ListModel.GetListModel cModel = null;
@@ -70,9 +69,9 @@ namespace CodingTools_371.Controllers
 
             foreach (var row in list)
             {
-                if (cToolID != row.ToolID)
+                if (cToolId != row.ToolID)
                 {
-                    if (cToolID != 0)
+                    if (cToolId != 0)
                     {
                         cCatGroup.Tags = tagList;
                         cCategoryList.Add(cCatGroup);
@@ -86,7 +85,7 @@ namespace CodingTools_371.Controllers
                         Url = row.URL,
                         Description = row.Description
                     };
-                    cToolID = row.ToolID;
+                    cToolId = row.ToolID;
                     cCategoryName = row.CategoryName;
                     //cModel = new ListModel.GetListModel();
                     cCategoryList = new List<ListModel.ToolCategoryGroup>();

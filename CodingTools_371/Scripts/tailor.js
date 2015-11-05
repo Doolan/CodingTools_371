@@ -3,8 +3,8 @@
 
 var KO_MODEL;
 $(document).ready(function () {
-    window.KO_MODEL = TailorMainModel({ "gradeArray": JSONGRADEARRAY, "technology": JSONTECHDATA, "toolList": JSONLISTDATA });
-    ko.applyBindings(window.KO_MODEL);
+    //window.KO_MODEL = TailorMainModel({ "gradeArray": JSONGRADEARRAY, "technology": JSONTECHDATA, "toolList": JSONLISTDATA });
+    //ko.applyBindings(window.KO_MODEL);
 
     $.ajax({
         url: 'GetToolList',
@@ -12,6 +12,8 @@ $(document).ready(function () {
         dataType:'JSON',
         success: function(data) {
             console.log(data);
+            window.KO_MODEL = TailorMainModel({ "gradeArray": JSONGRADEARRAY, "technology": JSONTECHDATA, "toolList": data });
+            ko.applyBindings(window.KO_MODEL);
         },
         error: function(request, status, error) {
             console.log('failed get', request, status, error);
@@ -24,10 +26,25 @@ $(document).ready(function () {
 // --------------------- Models ---------------------------------//
 var Task = function (text) {
     var self = this;
-    self.name = text.name;
-    self.url = text.url;
-    self.technology = text.technology;
-    self.grades = text.grades;
+    self.name = text.Name;
+    self.url = text.Url;
+    self.Description = text.Description;
+    self.technology = ko.observableArray([]);
+    self.grades = ko.observableArray([]);
+    self.SetFilterOptions = function(data)
+    {
+        for (var i = 0; i < data.length; i++)
+        {
+            if (data[i]['CategoryName'] === 'Technology') {
+                self.technology(data[i]['CategoryName']);
+            }
+            if (data[i]['CategoryName'] === 'Grades') {
+                self.grades(data[i]['CategoryName']);
+            }
+        }
+    }
+    self.SetFilterOptions(text.Tags);
+
 };
 
 var FilterOption = function (data, parent) {
@@ -49,7 +66,6 @@ var FilterOption = function (data, parent) {
             return self.selectedValue();
         },
         write: function(newvalue) {
-            console.log('hit', newvalue);
             self.selectedValue(!self.selectedValue());
             self.father.applyFilter();
         }
@@ -59,6 +75,9 @@ var FilterOption = function (data, parent) {
 
 var TailorMainModel = function (data) {
     var self = this;
+    self.gradeView = ko.observable(false);
+    self.techView = ko.observable(false);
+    self.listView = ko.observable(false);
     self.gradeArray = ko.observableArray($.map(data.gradeArray, function (text) { return new FilterOption(text,self) }));
     self.tech = ko.observableArray($.map(data.technology, function (text) { return new FilterOption(text, self) }));
     self.listGridData = ko.observableArray($.map(data.toolList, function (text) { return new Task(text) }));
@@ -82,9 +101,7 @@ var TailorMainModel = function (data) {
         self.applyFilter();
     };
 
-    self.gradeView = ko.observable(true);
-    self.techView = ko.observable(false);
-    self.listView = ko.observable(false);
+
 
     self.applyFilter = function() {
         console.log('applying Filter');
@@ -112,13 +129,14 @@ var TailorMainModel = function (data) {
     }
 
     self.filterAll = function (row) {
-        if (!filterObjectArrayArrayOverlap(self.gradeArray(), 'value', row.grades))
+        if (!filterObjectArrayArrayOverlap(self.gradeArray(), 'value', row.grades()))
             return false;
-        if (!filterObjectArrayArrayOverlap(self.tech(), 'value', row.technology))
+        if (!filterObjectArrayArrayOverlap(self.tech(), 'value', row.technology()))
             return false;
         return true;
     }
     //move to onload later
+    self.gradeView = ko.observable(true);
     if (getUrlParameter('Length') != 0) {
         self.skipToList();
     }
