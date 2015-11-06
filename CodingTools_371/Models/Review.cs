@@ -25,6 +25,7 @@ namespace CodingTools_371.Models
         public string Content { get; set; }
         public int ToolID { get; set; }
         public int CreatorID { get; set; }
+        public string Title { get; set; }
     
         public virtual Tool Tool { get; set; }
         public virtual User User { get; set; }
