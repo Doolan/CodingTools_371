@@ -3,7 +3,7 @@
         "reviewTitle": 'SUPERCOOL REVIEW TITLE',
         "reviewerName": 'COOL DUDE',
         "reviewDate": 'OCT 1, 2015',
-        "reviewBody": 'BLA BLA BLA'
+        "reviewBody": 'BLA BLA BLA',
     };
 
     this.reviewTitle = ko.observable(JSONSAMPLE.reviewTitle);
@@ -11,7 +11,17 @@
     this.reviewDate = ko.observable(JSONSAMPLE.reviewDate);
     this.reviewBody = ko.observable(JSONSAMPLE.reviewBody);
     
-
+    $.ajax({
+        url: 'GetToolList',
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (request, status, error) {
+            console.log('failed get', request, status, error);
+        }
+    });
     
 
     this.tagList = ko.observable('<p class="tag" id="3rd-grade">3rd Grade</p><p class="tag" id="ios">iOS</p><p class="tag" id="android">Android</p>")');

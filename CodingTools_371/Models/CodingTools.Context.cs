@@ -40,5 +40,15 @@ namespace CodingTools_371.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ToolList_Result>("get_ToolList");
         }
+    
+        public virtual ObjectResult<get_Reviews_Result> get_Reviews()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Reviews_Result>("get_Reviews");
+        }
+    
+        public virtual ObjectResult<get_ReviewList_Result> get_ReviewList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewList_Result>("get_ReviewList");
+        }
     }
 }

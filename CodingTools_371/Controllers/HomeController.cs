@@ -72,6 +72,15 @@ namespace CodingTools_371.Controllers
             return new JavaScriptSerializer().Serialize(ToolListHelper(list));
         }
 
+ /*       [HttpGet]
+        public string GetReviews()
+        {
+            var db = new codingtoolsdevEntities();
+            var list = db.get_Reviews().ToList();
+            //var humanid = 0;
+            //return new JavaScriptSerializer().Serialize(ToolListHelper(list));
+        }*/
+
         private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
         {
             var cToolID = 0;

@@ -22,5 +22,7 @@ namespace CodingTools_371.Models
         public string TagName { get; set; }
         public string TagValue { get; set; }
         public string CategoryName { get; set; }
+        public Nullable<int> TagId { get; set; }
+        public Nullable<int> TagCategoryId { get; set; }
     }
 }
