@@ -4,6 +4,9 @@
 }
 <link href="~/Content/Login.css" rel="stylesheet" type="text/css" />
 
+<script src="~/scripts/login.js"></script>
+
+
 
 <h2>Login</h2>
 
@@ -11,13 +14,13 @@
     <form data-example-id="simple-input-groups">
         <div class="input-group input-group-lg" id="sizing-addon1">
             <span class="input-group-addon" id="basic-addon1">Username</span>
-            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Username"></input>
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Username" data-bind="value: username"></input>
         </div>
         <br></br>
 
         <div class="input-group input-group-lg" id="sizing-addon1">
             <span class="input-group-addon" id="basic-addon1">Password</span>
-            <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Password"></input>
+            <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Password" data-bind="value: password"></input>
         </div>
         <br></br>
 
