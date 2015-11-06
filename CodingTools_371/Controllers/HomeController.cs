@@ -81,7 +81,22 @@ namespace CodingTools_371.Controllers
         }
 
         [HttpGet]
+        public string GetReviewList(string toolIdString)
+        {
+            int toolId;
+            if (!int.TryParse(toolIdString, out toolId))
+                throw new InvalidDataException("Tool Id did not parse to INT");
+
+            var db = new codingtoolsdevEntities();
+            var list = db.get_ReviewsList(toolId).ToList();
+            return new JavaScriptSerializer().Serialize(list);
+        }
+
+        
+
         public string GetProjectInfo(string toolIdString)
+
+        
         {
             int toolId;
             if (!int.TryParse(toolIdString, out toolId))
@@ -113,6 +128,7 @@ namespace CodingTools_371.Controllers
             };
         }
         
+        //private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
         private List<ListModel.GetListModel> _ToolListHelper(List<get_ToolList_Result> list)
         {
             var cToolId = 0;
@@ -165,6 +181,49 @@ namespace CodingTools_371.Controllers
             return returnList;
         }
 
+        //private List<ReviewModel.GetReviewModel> ReviewListHelper(List<get_ReviewList_Result> list)
+        //{
+        //    var cReviewID = 0;
+        //    var returnList = new List<ReviewModel.GetReviewModel>();
+        //    ReviewModel.GetReviewModel cModel = null;
+
+        //    foreach (var row in list)
+        //    {
+        //       // if (cReviewID != row.ReviewID)
+        //        if(true)
+        //        {
+        //            /*if (cReviewID != 0)
+        //            {
+        //                cCatGroup.Tags = tagList;
+        //                //cCategoryList.Add(cCatGroup);
+        //                cModel.Tags = cCategoryList;
+        //                returnList.Add(cModel);
+        //            }*/
+
+        //            cModel = new ReviewModel.GetReviewModel
+        //            {
+        //                ReviewId = row.ReviewID,
+        //                Title = row.Title,
+        //                Rating = row.Rating,
+        //                Content = row.Content,
+        //                Username = row.Username,
+        //                ToolId = row.ToolID
+        //            };
+        //            cReviewID = row.ReviewID;
+        //            returnList.Add(cModel);
+
+        //            //tagList = new List<ListModel.ToolTagObject> { new ListModel.ToolTagObject { TagName = row.TagName, TagValue = row.TagValue } };
+        //        }
+        //        else
+        //        {
+        //            //tagList.Add(new ListModel.ToolTagObject { TagName = row.TagName, TagValue = row.TagValue });
+
+        //        }
+        //    }
+        //    return returnList;
+        //}
+
+
         private List<TagModels.TagCategory> _GenerateTagLists(List<get_TagList_Result> tags)
         {
            var categoryName = "";
@@ -202,9 +261,7 @@ namespace CodingTools_371.Controllers
             });
             return catList;
         }
-#endregion 
-
-
+        #endregion
         #endregion
 
     }

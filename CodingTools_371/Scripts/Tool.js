@@ -32,6 +32,15 @@ var Tag = function(data) {
     self.TagId = data.TagId;
 }
 
+var Review = function (data) {
+    var self = this;
+    self.title = data.Title;
+    self.rating = data.Rating;
+    self.content = data.Content;
+    self.username = data.Username;
+    self.ratingDisplay = self.rating + '/5';
+}
+
 var ViewToolsMain = function (data) {
     var self = this;
     self.toolIdString = data.ToolId;
@@ -41,26 +50,32 @@ var ViewToolsMain = function (data) {
    // self.reviews = data.reviews;
     self.desc = data.Description;
     self.tags = ko.observableArray($.map(data.Tags, function (text) { return new Tag(text) }));
+
+    self.showReviews = ko.observable(false);
+    self.reviewArray = ko.observableArray([]);
+
+
+    self.loadReviews = function() {
+        $.ajax({
+            url: 'GetReviewList',
+            type: 'GET',
+            data: { 'toolIdString': self.toolIdString },
+            dataType: 'JSON',
+            success: function (data) {
+                console.log(data);
+                self.reviewArray($.map(data, function (text) { return new Review(text) }));
+                self.showReviews(true);
+                console.log(self.reviewArray());
+            },
+            error: function (request, status, error) {
+                console.log('failed get', request, status, error);
+            }
+        });
+    };
+    self.loadReviews();
+
+
 };
-
-
-/**--------------SAMPLE DATA-------------------**/
-var JSONSITEINFO =
-{
-    "Name": 'Test',
-    "Url": 'http://www.codeacademy.com',
-    "img": '../../Images/Tool/Codeacademy.jpg',
-    "desc": 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nisi tortor, eleifend a nulla sit amet, euismod cursus felis. Duis tincidunt sodales fermentum. Sed finibus tempus augue fringilla lobortis. Aenean mollis massa dui, id lacinia risus feugiat vitae. Duis tincidunt enim a neque accumsan hendrerit. Donec mollis, odio vitae finibus efficitur, quam diam efficitur diam, ac rhoncus justo est id urna. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    "reviews": ['review1 ', 'review 2'],
-    "tags": [
-            {'name': '8th Grade' },
-            {'name': '9th Grade' },
-            {'name': 'Laptop'},
-            {'name': 'Chromebook'}
-    ]
-};
-
-
 
 
 
