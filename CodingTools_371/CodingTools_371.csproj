@@ -199,13 +199,11 @@
     <Compile Include="Models\get_ReviewList_Result.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\get_Reviews_Result.cs">
-      <DependentUpon>CodingTools.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\get_ToolList_Result.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ReviewModel.cs" />
     <Compile Include="Models\ListModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Review.cs">

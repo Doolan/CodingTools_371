@@ -13,9 +13,11 @@ namespace CodingTools_371.Models
     
     public partial class get_ReviewList_Result
     {
+        public int ReviewID { get; set; }
         public string Title { get; set; }
         public Nullable<decimal> Rating { get; set; }
         public string Content { get; set; }
         public int Username { get; set; }
+        public int ToolID { get; set; }
     }
 }
