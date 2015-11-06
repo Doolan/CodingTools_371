@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "MakeReview";
+}
+<link rel="stylesheet" href="../../Content/MakeReview.css"/>
+
+<div class="form-area">
+    <form data-example-id="simple-input-groups">
+        <div>
+            <fieldset class="rating">
+                <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+                <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
+                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+            </fieldset>
+        </div>
+
+
+        <div class="input-group input-group-lg" id="sizing-addon1">
+            <label for="title">Review Title:</label>
+            <!--<span class="input-group-addon" id="basic-addon1">Review Title</span>-->
+            <input type="text" class="form-control" id="title" aria-describedby="sizing-addon1" placeholder="Enter review title..."></input>
+        </div>
+        <br></br>
+
+        <div class="form-group">
+            <label for="comment">Review Description:</label>
+            <textarea class="form-control" rows="5" id="comment" placeholder="Enter review description..."></textarea>
+        </div>
+        <br></br>
+
+
+        <button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="login-but">
+            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+            Publish Review
+        </button>
+    </form>
+</div>

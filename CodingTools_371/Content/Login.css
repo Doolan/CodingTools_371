@@ -1,0 +1,37 @@
+﻿body{
+	/*font-family: Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	line-height: 1.6;*/
+}
+
+.form-area {
+	background-color: #FCFCFC;
+	border-style: solid;
+	border-color: #BBB;
+	border-width: 1px;
+	border-radius: 4px 4px 4px 4px;
+	
+	padding: 15px;
+	
+	margin: 0px;
+	
+}
+
+.input-group {
+	/*display: table-cell;*/
+	width: 100%;
+}
+
+#login-but {
+	background-color: #4276D7;
+	color: #FFFFFF;
+	/*float: right;*/
+}
+
+.page-title {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	
+	color: #4276D7;
+}
