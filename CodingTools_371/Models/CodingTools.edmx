@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="codingtoolsdevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="codingtoolsdevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Reviews">
           <Key>
             <PropertyRef Name="ReviewId" />
@@ -38,6 +38,7 @@
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TagCategoryId" Type="int" Nullable="false" />
           <Property Name="Value" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ImgPath" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Tools">
           <Key>
@@ -167,6 +168,7 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="get_TagList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="get_ToolList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="codingtoolsdevModelStoreContainer">
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
@@ -217,8 +219,7 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
             <End Role="ToolTags" EntitySet="ToolTags" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="codingtoolsdevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -264,6 +265,7 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <NavigationProperty Name="ReviewTags" Relationship="Self.FK_ReviewTags_ToTags" FromRole="Tags" ToRole="ReviewTags" />
           <NavigationProperty Name="TagCategory" Relationship="Self.FK_Tags_ToCategories" FromRole="Tags" ToRole="TagCategories" />
           <NavigationProperty Name="ToolTags" Relationship="Self.FK_ToolTags_ToTags" FromRole="Tags" ToRole="ToolTags" />
+          <Property Name="ImgPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tool">
           <Key>
@@ -434,6 +436,7 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
             <End Role="ToolTags" EntitySet="ToolTags" />
           </AssociationSet>
           <FunctionImport Name="get_ToolList" ReturnType="Collection(codingtoolsdevModel.get_ToolList_Result)" />
+          <FunctionImport Name="get_TagList" ReturnType="Collection(codingtoolsdevModel.get_TagList_Result)" />
         </EntityContainer>
         <ComplexType Name="get_ToolList_Result">
           <Property Type="Int32" Name="ToolID" Nullable="false" />
@@ -444,6 +447,13 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Property Type="String" Name="TagName" Nullable="true" />
           <Property Type="String" Name="TagValue" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="CategoryName" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_TagList_Result">
+          <Property Type="Int32" Name="TagId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Value" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CategoryName" Nullable="false" />
+          <Property Type="String" Name="ImgPath" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -482,6 +492,7 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <EntitySetMapping Name="Tags">
             <EntityTypeMapping TypeName="codingtoolsdevModel.Tag">
               <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
                 <ScalarProperty Name="TagId" ColumnName="TagId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TagCategoryId" ColumnName="TagCategoryId" />
@@ -545,6 +556,17 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
                 <ScalarProperty Name="TagName" ColumnName="TagName" />
                 <ScalarProperty Name="TagValue" ColumnName="TagValue" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_TagList" FunctionName="codingtoolsdevModel.Store.get_TagList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="codingtoolsdevModel.get_TagList_Result">
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

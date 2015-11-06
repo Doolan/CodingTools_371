@@ -196,6 +196,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CodingTools.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\get_TagList_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\get_ToolList_Result.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
