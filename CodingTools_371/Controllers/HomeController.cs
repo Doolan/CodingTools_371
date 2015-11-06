@@ -89,10 +89,11 @@ namespace CodingTools_371.Controllers
             return new JavaScriptSerializer().Serialize(ReviewListHelper(list));
         }
 
-        private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
+        
 
         public string GetProjectInfo(string toolIdString)
 
+        
         {
             int toolId;
             if (!int.TryParse(toolIdString, out toolId))
@@ -124,6 +125,7 @@ namespace CodingTools_371.Controllers
             };
         }
         
+        //private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
         private List<ListModel.GetListModel> _ToolListHelper(List<get_ToolList_Result> list)
         {
             var cToolId = 0;
@@ -256,9 +258,6 @@ namespace CodingTools_371.Controllers
             });
             return catList;
         }
-#endregion 
-
-
         #endregion
 
     }
