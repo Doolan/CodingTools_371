@@ -202,6 +202,9 @@
     <Compile Include="Models\get_ToolList_Result.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\get_Tool_Page_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ListModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

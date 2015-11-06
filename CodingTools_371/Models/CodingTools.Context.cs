@@ -45,5 +45,14 @@ namespace CodingTools_371.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_TagList_Result>("get_TagList");
         }
+    
+        public virtual ObjectResult<get_Tool_Page_Result> get_Tool_Page(Nullable<int> toolId)
+        {
+            var toolIdParameter = toolId.HasValue ?
+                new ObjectParameter("ToolId", toolId) :
+                new ObjectParameter("ToolId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Tool_Page_Result>("get_Tool_Page", toolIdParameter);
+        }
     }
 }
