@@ -12,7 +12,7 @@ $(document).ready(function () {
         dataType:'JSON',
         success: function(data) {
             console.log(data);
-            window.KO_MODEL = TailorMainModel({ "gradeArray": JSONGRADEARRAY, "technology": JSONTECHDATA, "toolList": data });
+            window.KO_MODEL = TailorMainModel(data);
             ko.applyBindings(window.KO_MODEL);
         },
         error: function(request, status, error) {
@@ -31,18 +31,26 @@ var Task = function (text) {
     self.Description = text.Description;
     self.technology = ko.observableArray([]);
     self.grades = ko.observableArray([]);
+    self.displayTechnology = ko.observableArray([]);
+    self.displayGrades = ko.observableArray([]);
+
     self.SetFilterOptions = function(data)
     {
         for (var i = 0; i < data.length; i++)
         {
             if (data[i]['CategoryName'] === 'Technology') {
-                self.technology(data[i]['CategoryName']);
+                self.technology(data[i]['Tags']);
+                self.displayTechnology($.map(data[i]['Tags'], function (text) { return ' ' + text['TagName'] }));
             }
             if (data[i]['CategoryName'] === 'Grades') {
-                self.grades(data[i]['CategoryName']);
+                self.grades(data[i]['Tags']);
+                self.displayGrades($.map(data[i]['Tags'], function(text) { return ' ' + text['TagName'] }));
             }
         }
     }
+    
+
+
     self.SetFilterOptions(text.Tags);
 
 };
@@ -50,9 +58,10 @@ var Task = function (text) {
 var FilterOption = function (data, parent) {
     var self = this;
     self.father = parent;
-    self.name = data.name;
-    self.imgPath = data.imgPath == null? '' : data.imgPath; //only valid for tech
-    self.value = data.value;
+    self.id = data.TagId;
+    self.name = data.Name;
+    self.imgPath = data.ImgPath == null ? '' : data.ImgPath; //only valid for tech
+    self.value = data.Value;
     self.html = '<input type="checkbox" value="' + self.value + '" data-bind>' + self.name;
     self.selectedValue = ko.observable(false);
 
@@ -78,10 +87,28 @@ var TailorMainModel = function (data) {
     self.gradeView = ko.observable(false);
     self.techView = ko.observable(false);
     self.listView = ko.observable(false);
-    self.gradeArray = ko.observableArray($.map(data.gradeArray, function (text) { return new FilterOption(text,self) }));
-    self.tech = ko.observableArray($.map(data.technology, function (text) { return new FilterOption(text, self) }));
-    self.listGridData = ko.observableArray($.map(data.toolList, function (text) { return new Task(text) }));
-    self.listFilterData = ko.observableArray($.map(data.toolList, function (text) { return new Task(text) }));
+   // self.gradeArray = ko.observableArray($.map(data.gradeArray, function (text) { return new FilterOption(text,self) }));
+   // self.tech = ko.observableArray($.map(data.technology, function (text) { return new FilterOption(text, self) }));
+    self.gradeArray = ko.observableArray([]);
+    self.tech = ko.observableArray([]);
+    self.codeTypeArray = ko.observableArray([]);
+    self.listGridData = ko.observableArray($.map(data.ToolList, function (text) { return new Task(text) }));
+    self.listFilterData = ko.observableArray($.map(data.ToolList, function (text) { return new Task(text) }));
+
+    self.SetFilterOptions = function (data) {
+        for (var i = 0; i < data.length; i++) {
+            if (data[i]['CategoryName'] === 'Technology') {
+                self.tech($.map(data[i]['Tags'], function (text) { return new FilterOption(text, self) }));
+            }
+            if (data[i]['CategoryName'] === 'Grades') {
+                self.gradeArray($.map(data[i]['Tags'], function (text) { return new FilterOption(text, self) }));
+            }
+            if (data[i]['CategoryName'] === 'Code Type') {
+                self.codeTypeArray($.map(data[i]['Tags'], function (text) { return new FilterOption(text, self) }));
+            }
+        }
+    }
+    self.SetFilterOptions(data.TagList);
 
     self.tailorAdvanceClick = function() {
         if (self.gradeView()) {
@@ -100,8 +127,6 @@ var TailorMainModel = function (data) {
         self.listView(true);
         self.applyFilter();
     };
-
-
 
     self.applyFilter = function() {
         console.log('applying Filter');

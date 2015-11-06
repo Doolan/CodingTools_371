@@ -9,7 +9,9 @@ CREATE PROCEDURE get_ToolList
 
 SELECT ToolID, Name, URL, [Description], ImgPath, TagName, TagValue, CategoryName 
 FROM Tool_View
-ORDER BY Name ASC, TagValue ASC, CategoryName ASC
+ORDER BY Name ASC, 
+TagValue ASC, 
+CategoryName ASC
 
 DECLARE @Status SMALLINT
 SET @Status = @@ERROR

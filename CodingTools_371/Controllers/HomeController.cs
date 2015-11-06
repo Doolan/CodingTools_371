@@ -53,8 +53,13 @@ namespace CodingTools_371.Controllers
         {
             var db = new codingtoolsdevEntities();
             var list = db.get_ToolList().ToList();
-            var toolList = ToolListHelper(list);
-            return new JavaScriptSerializer().Serialize(toolList);
+            //var toolList = ToolListHelper(list);
+            var tags = db.get_TagList().ToList();
+            return new JavaScriptSerializer().Serialize(new ListViewInitModel
+            {
+                ToolList = ToolListHelper(list),
+                TagList = GenerateTagLists(tags)
+            });
         }
 
         private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
@@ -107,6 +112,44 @@ namespace CodingTools_371.Controllers
                 }
             }
             return returnList;
+        }
+
+        private List<TagModels.TagCategory> GenerateTagLists(List<get_TagList_Result> tags)
+        {
+           var categoryName = "";
+            //TagModels.TagCategory tCat = null;
+            List<TagModels.Tag> tagList = null;
+            var catList = new List<TagModels.TagCategory>();
+
+            foreach (var row in tags)
+            {
+                if (categoryName != row.CategoryName)
+                {
+                    if (categoryName != "")
+                    {
+                        catList.Add(new TagModels.TagCategory
+                        {
+                            CategoryName = categoryName,
+                            Tags = tagList
+                        });
+                    }
+                    tagList = new List<TagModels.Tag>();
+                    categoryName = row.CategoryName;
+                }
+                tagList.Add(new TagModels.Tag
+                {
+                    TagId = row.TagId,
+                    Name = row.Name,
+                    Value = row.Value,
+                    ImgPath = row.ImgPath
+                });
+            }
+            catList.Add(new TagModels.TagCategory
+            {
+                CategoryName = categoryName,
+                Tags = tagList
+            });
+            return catList;
         }
 
 #endregion
