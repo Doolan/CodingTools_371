@@ -1,0 +1,145 @@
+﻿body{
+	/*font-family: Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	line-height: 1.6;*/
+}
+
+strong{
+	color: #5886af;
+}
+
+em {
+	font-style: normal;
+	font-color: #a5a5a5;
+}
+
+.review-box {
+	background-color: #F5F5F5;
+	border-radius: 10px;
+	padding: 5px;
+	margin: 10px;
+
+}
+
+.tag {
+	display: inline-block;
+	color: white;
+	text-shadow: 1px 1px #777777;
+	background-color: #ed7d31;
+	border-radius: 3px;
+	padding: 5px 12px 5px 12px;
+	margin: 3px 3px 3px 3px;
+	font-weight: bold;
+}
+
+#ios {
+	background-color: #a5a5a5;
+}
+
+#android {
+	background-color: #ffc000;
+}
+#2nd-grade{
+	background-color: #4772cc;
+}
+
+.form-area {
+	background-color: #FCFCFC;
+	border-style: solid;
+	border-color: #BBB;
+	border-width: 1px;
+	border-radius: 4px 4px 4px 4px;
+	width: 100%;
+	
+	padding: 15px;
+	margin: 0px;
+	
+	display: block;
+}
+
+.review-title{
+	margin-top: 0px;
+	padding-left: 6px;
+	margin-bottom: 5px;
+}
+
+.review-details{
+	display: inline-block;
+	margin-top: 0px;
+	margin-right: auto;
+	width: 100%;
+	padding-left: 8px;
+	text-align: left;
+
+}
+
+.review-details p{
+	margin-top: 0px;
+	margin-bottom: 5px;
+
+
+}
+
+.input-group {
+	/*display: table-cell;*/
+	width: 100%;
+	float:left;
+	margin-bottom: 2%;
+}
+
+#login-but {
+	background-color: #4276D7;
+	color: #FFFFFF;
+	/*float: right;*/
+}
+
+.page-title {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	
+	color: #4276D7;
+}
+
+.rating {
+	display: block;
+	float: left;
+	margin-right: 8px;
+}
+
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+    color:#ddd;
+    text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating > input:checked ~ label {
+    color: #4276D7;
+    text-shadow:1px 1px #2E5396, 2px 2px #2E5396, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+
+
+
+
+
