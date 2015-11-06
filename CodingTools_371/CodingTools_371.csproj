@@ -331,6 +331,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Tool\" />
     <Folder Include="Views\Tools\" />
   </ItemGroup>
   <ItemGroup>
