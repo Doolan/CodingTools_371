@@ -2,8 +2,8 @@
 $(document).ready(function () {
     //window.KO_MODEL = ViewToolsMain(JSONSITEINFO);
     //ko.applyBindings(window.KO_MODEL);
-
-    var toolId = getUrlParameter('ID')
+    $('.body-content').hide();
+    var toolId = getUrlParameter('ID');
 
 
     $.ajax({
@@ -14,6 +14,7 @@ $(document).ready(function () {
         success: function (data) {
             window.KO_MODEL = ViewToolsMain(data);
             ko.applyBindings(window.KO_MODEL);
+            $('.body-content').show();
         },
         error: function (request, status, error) {
             console.log('failed get', request, status, error);
