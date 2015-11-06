@@ -46,6 +46,21 @@ namespace CodingTools_371.Controllers
             return View();
         }
 
+        public ActionResult MakeAccount()
+        {
+            return View();
+        }
+
+        public ActionResult MakeReview()
+        {
+            return View();
+        }
+
+        public ActionResult ReviewBox()
+        {
+            return View();
+        }
+
         #region AJAX CALLS
 
         [HttpGet]
