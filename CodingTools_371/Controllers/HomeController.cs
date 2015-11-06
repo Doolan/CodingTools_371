@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Web.WebSockets;
 using CodingTools_371.Models;
 
 namespace CodingTools_371.Controllers
@@ -31,10 +34,10 @@ namespace CodingTools_371.Controllers
             return View();
         }
 
-        //public ActionResult List()
-        //{
-        //   return View();
-        //}
+        public ActionResult Tool()
+        {
+            return View();
+        }
 
         public ActionResult Tailor()
         {
@@ -68,8 +71,13 @@ namespace CodingTools_371.Controllers
         {
             var db = new codingtoolsdevEntities();
             var list = db.get_ToolList().ToList();
-            var humanid = 0;
-            return new JavaScriptSerializer().Serialize(ToolListHelper(list));
+            //var toolList = _ToolListHelper(list);
+            var tags = db.get_TagList().ToList();
+            return new JavaScriptSerializer().Serialize(new ListViewInitModel
+            {
+                ToolList = _ToolListHelper(list),
+                TagList = _GenerateTagLists(tags)
+            });
         }
 
         [HttpGet]
@@ -82,9 +90,43 @@ namespace CodingTools_371.Controllers
         }
 
         private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
+
+        public string GetProjectInfo(string toolIdString)
+
         {
-            var cToolID = 0;
-            var cTagValue = "";
+            int toolId;
+            if (!int.TryParse(toolIdString, out toolId))
+                throw new InvalidDataException("Tool Id did not parse to INT");
+
+            var db = new codingtoolsdevEntities();
+            var list = db.get_Tool_Page(toolId).ToList();
+            
+            return new JavaScriptSerializer().Serialize(_ProjectInfoHelper(list));
+        }
+
+        #region helper Methods
+
+        private ToolInfo.Tool _ProjectInfoHelper(List<get_Tool_Page_Result> list)
+        {
+            var tags = list.Select(row => new ToolInfo.Tag
+            {
+                TagId = (int) row.TagId, TagName = row.TagName, TagValue = row.TagValue
+            }).ToList();
+
+            return new ToolInfo.Tool
+            {
+                ToolId = list[0].ToolId,
+                Name = list[0].Name,
+                Url = list[0].URL,
+                Description = list[0].Description,
+                ImgPath = list[0].ImgPath,
+                Tags = tags
+            };
+        }
+        
+        private List<ListModel.GetListModel> _ToolListHelper(List<get_ToolList_Result> list)
+        {
+            var cToolId = 0;
             var cCategoryName = "";
             var returnList = new List<ListModel.GetListModel>();
             ListModel.GetListModel cModel = null;
@@ -94,9 +136,9 @@ namespace CodingTools_371.Controllers
 
             foreach (var row in list)
             {
-                if (cToolID != row.ToolID)
+                if (cToolId != row.ToolID)
                 {
-                    if (cToolID != 0)
+                    if (cToolId != 0)
                     {
                         cCatGroup.Tags = tagList;
                         cCategoryList.Add(cCatGroup);
@@ -110,7 +152,7 @@ namespace CodingTools_371.Controllers
                         Url = row.URL,
                         Description = row.Description
                     };
-                    cToolID = row.ToolID;
+                    cToolId = row.ToolID;
                     cCategoryName = row.CategoryName;
                     //cModel = new ListModel.GetListModel();
                     cCategoryList = new List<ListModel.ToolCategoryGroup>();
@@ -177,6 +219,47 @@ namespace CodingTools_371.Controllers
         }
 
 #endregion
+        private List<TagModels.TagCategory> _GenerateTagLists(List<get_TagList_Result> tags)
+        {
+           var categoryName = "";
+            //TagModels.TagCategory tCat = null;
+            List<TagModels.Tag> tagList = null;
+            var catList = new List<TagModels.TagCategory>();
+
+            foreach (var row in tags)
+            {
+                if (categoryName != row.CategoryName)
+                {
+                    if (categoryName != "")
+                    {
+                        catList.Add(new TagModels.TagCategory
+                        {
+                            CategoryName = categoryName,
+                            Tags = tagList
+                        });
+                    }
+                    tagList = new List<TagModels.Tag>();
+                    categoryName = row.CategoryName;
+                }
+                tagList.Add(new TagModels.Tag
+                {
+                    TagId = row.TagId,
+                    Name = row.Name,
+                    Value = row.Value,
+                    ImgPath = row.ImgPath
+                });
+            }
+            catList.Add(new TagModels.TagCategory
+            {
+                CategoryName = categoryName,
+                Tags = tagList
+            });
+            return catList;
+        }
+#endregion 
+
+
+        #endregion
 
     }
 }
