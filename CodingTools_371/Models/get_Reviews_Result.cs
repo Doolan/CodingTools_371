@@ -11,7 +11,7 @@ namespace CodingTools_371.Models
 {
     using System;
     
-    public partial class get_ReviewList_Result
+    public partial class get_Reviews_Result
     {
         public string Title { get; set; }
         public Nullable<decimal> Rating { get; set; }

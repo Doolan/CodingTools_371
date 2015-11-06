@@ -1,14 +1,18 @@
-﻿IF OBJECT_ID('get_Reviews', 'P') IS NOT NULL
-DROP PROCEDURE get_Reviews
+﻿IF OBJECT_ID('get_ReviewsList', 'P') IS NOT NULL
+DROP PROCEDURE get_ReviewsList
 GO
 
-CREATE PROCEDURE get_Reviews
+CREATE PROCEDURE get_ReviewsList
+(@ToolId INT)
  AS
  SET NOCOUNT ON
 
-SELECT r.Title, r.Rating, r.Content, r.CreatorID AS Username FROM Reviews r
-WHERE r.ToolID = 1
-ORDER BY r.ReviewID ASC-- t.Value ASC
+SELECT r.Title, r.Rating, r.Content, u.Username 
+FROM Reviews r
+JOIN Users u ON u.UserID = r.CreatorID
+WHERE r.ToolID = @ToolId
+ORDER BY r.ReviewID ASc
+
 
 DECLARE @Status SMALLINT
 SET @Status = @@ERROR

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\nygrendr\Documents\RHIT 15-16\CSSE 371\CodingTools_371\CodingTools_371\Models\CodingTools.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Steven\Documents\371\CodingTools_371\CodingTools_371\Models\CodingTools.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

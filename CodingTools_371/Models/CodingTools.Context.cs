@@ -40,12 +40,21 @@ namespace CodingTools_371.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ToolList_Result>("get_ToolList");
         }
-
+    
         public virtual ObjectResult<get_ReviewList_Result> get_ReviewList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewList_Result>("get_ReviewList");
         }
-
+    
+        public virtual ObjectResult<get_Reviews1_Result> get_Reviews1(Nullable<int> toolId)
+        {
+            var toolIdParameter = toolId.HasValue ?
+                new ObjectParameter("ToolId", toolId) :
+                new ObjectParameter("ToolId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Reviews1_Result>("get_Reviews1", toolIdParameter);
+        }
+    
         public virtual ObjectResult<get_TagList_Result> get_TagList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_TagList_Result>("get_TagList");
@@ -58,6 +67,15 @@ namespace CodingTools_371.Models
                 new ObjectParameter("ToolId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Tool_Page_Result>("get_Tool_Page", toolIdParameter);
+        }
+    
+        public virtual ObjectResult<get_ReviewsList_Result> get_ReviewsList(Nullable<int> toolId)
+        {
+            var toolIdParameter = toolId.HasValue ?
+                new ObjectParameter("ToolId", toolId) :
+                new ObjectParameter("ToolId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewsList_Result>("get_ReviewsList", toolIdParameter);
         }
     }
 }

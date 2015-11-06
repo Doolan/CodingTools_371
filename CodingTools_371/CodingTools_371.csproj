@@ -197,7 +197,16 @@
       <DependentUpon>CodingTools.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\get_ReviewList_Result.cs">
-	    <DependentUpon>CodingTools.tt</DependentUpon>
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\get_Reviews1_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\get_ReviewsList_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\get_Reviews_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\get_TagList_Result.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
@@ -258,6 +267,13 @@
     <Content Include="Images\Tailor\chromebook.jpg" />
     <Content Include="Images\Tailor\iPad.jpg" />
     <Content Include="Images\Tailor\windows.jpg" />
+    <Content Include="Images\Tool\Code.org.jpeg" />
+    <Content Include="Images\Tool\Codeacademy.jpg" />
+    <Content Include="Images\Tool\CodeCombat.com.jpg" />
+    <Content Include="Images\Tool\hopscotch.jpg" />
+    <Content Include="Images\Tool\kodable.com.jpg" />
+    <Content Include="Images\Tool\scratch.jpg" />
+    <Content Include="Images\Tool\stencyle.com.jpg" />
     <Content Include="Models\CodingTools.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CodingTools.edmx</DependentUpon>
@@ -340,7 +356,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\Tool\" />
     <Folder Include="Views\Tools\" />
   </ItemGroup>
   <ItemGroup>

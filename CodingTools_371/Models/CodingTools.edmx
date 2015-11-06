@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="codingtoolsdevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="codingtoolsdevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Reviews">
           <Key>
             <PropertyRef Name="ReviewId" />
@@ -172,6 +172,13 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           </ReferentialConstraint>
         </Association>
         <Function Name="get_ReviewList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="get_ReviewsList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ToolId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_TagList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="get_Tool_Page" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ToolId" Type="int" Mode="In" />
+        </Function>
         <Function Name="get_ToolList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="codingtoolsdevModelStoreContainer">
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
@@ -446,6 +453,16 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <FunctionImport Name="get_ToolList" ReturnType="Collection(codingtoolsdevModel.get_ToolList_Result)" />
           <FunctionImport Name="get_Reviews" ReturnType="Collection(codingtoolsdevModel.get_Reviews_Result)" />
           <FunctionImport Name="get_ReviewList" ReturnType="Collection(codingtoolsdevModel.get_ReviewList_Result)" />
+          <FunctionImport Name="get_Reviews1" ReturnType="Collection(codingtoolsdevModel.get_Reviews1_Result)">
+            <Parameter Name="ToolId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_TagList" ReturnType="Collection(codingtoolsdevModel.get_TagList_Result)" />
+          <FunctionImport Name="get_Tool_Page" ReturnType="Collection(codingtoolsdevModel.get_Tool_Page_Result)">
+          <Parameter Name="ToolId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_ReviewsList" ReturnType="Collection(codingtoolsdevModel.get_ReviewsList_Result)">
+            <Parameter Name="ToolId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="get_ToolList_Result">
           <Property Type="Int32" Name="ToolID" Nullable="false" />
@@ -468,6 +485,36 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Property Type="Decimal" Name="Rating" Nullable="true" Precision="18" Scale="0" />
           <Property Type="String" Name="Content" Nullable="true" />
           <Property Type="Int32" Name="Username" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_Reviews1_Result">
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="30" />
+          <Property Type="Decimal" Name="Rating" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="Content" Nullable="true" />
+          <Property Type="String" Name="Username" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="get_TagList_Result">
+          <Property Type="Int32" Name="TagId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Value" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CategoryName" Nullable="false" />
+          <Property Type="String" Name="ImgPath" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_Tool_Page_Result">
+          <Property Type="Int32" Name="ToolId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="String" Name="URL" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ImgPath" Nullable="true" />
+          <Property Type="String" Name="TagName" Nullable="true" />
+          <Property Type="String" Name="TagValue" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="TagId" Nullable="true" />
+          <Property Type="Int32" Name="TagCategoryId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_ReviewsList_Result">
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="30" />
+          <Property Type="Decimal" Name="Rating" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="Content" Nullable="true" />
+          <Property Type="String" Name="Username" Nullable="true" MaxLength="10" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -579,6 +626,42 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <FunctionImportMapping FunctionImportName="get_ReviewList" FunctionName="codingtoolsdevModel.Store.get_ReviewList">
             <ResultMapping>
               <ComplexTypeMapping TypeName="codingtoolsdevModel.get_ReviewList_Result">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_TagList" FunctionName="codingtoolsdevModel.Store.get_TagList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="codingtoolsdevModel.get_TagList_Result">
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_Tool_Page" FunctionName="codingtoolsdevModel.Store.get_Tool_Page">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="codingtoolsdevModel.get_Tool_Page_Result">
+                <ScalarProperty Name="ToolId" ColumnName="ToolId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="TagValue" ColumnName="TagValue" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="TagCategoryId" ColumnName="TagCategoryId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_ReviewsList" FunctionName="codingtoolsdevModel.Store.get_ReviewsList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="codingtoolsdevModel.get_ReviewsList_Result">
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="Content" ColumnName="Content" />

@@ -6,7 +6,7 @@
         "reviewBody": 'BLA BLA BLA',
     };
 
-    var rTitle = "title";
+    var rTitle = 'title';
     var reviewTitle = ko.observable(rTitle);
 
     var reviewList = null;
@@ -14,17 +14,11 @@
     $.ajax({
         url: 'GetReviewList',
         type: 'GET',
+        data:{'toolIdString': 1},
         dataType: 'JSON',
         success: function (data) {
             console.log(data);
             reviewList = data;
-
-            //rTitle = reviewList[0].Title;
-            //this.reviewerName = ko.observable(reviewList[0].Username);
-            //this.reviewDate = ko.observable("DATE");
-            //this.reviewBody = ko.observable(reviewList[0].Content);
-
-            //this.reviewTitle("json success");
 
         },
         error: function (request, status, error) {

@@ -11,11 +11,11 @@ namespace CodingTools_371.Models
 {
     using System;
     
-    public partial class get_ReviewList_Result
+    public partial class get_Reviews1_Result
     {
         public string Title { get; set; }
         public Nullable<decimal> Rating { get; set; }
         public string Content { get; set; }
-        public int Username { get; set; }
+        public string Username { get; set; }
     }
 }
