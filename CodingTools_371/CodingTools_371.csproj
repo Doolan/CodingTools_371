@@ -236,6 +236,7 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\ReviewBox.css" />
     <Content Include="Content\ReviewCreation.css" />
+    <Content Include="Content\Tools.css" />
     <Content Include="Images\CodingToolsIcon.png" />
     <Content Include="Images\CodingToolsLogo.png" />
     <Content Include="Content\bootstrap.css" />
@@ -283,6 +284,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\reviewbox.js" />
     <Content Include="Scripts\tailor.js" />
+    <Content Include="Scripts\tool.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -325,6 +327,7 @@
     <Content Include="Views\Home\MakeAccount.cshtml" />
     <Content Include="Views\Home\MakeReview.cshtml" />
     <Content Include="Views\Home\ReviewBox.cshtml" />
+    <Content Include="Views\Home\Tool.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

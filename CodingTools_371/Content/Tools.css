@@ -1,0 +1,23 @@
+﻿.jumbotron {
+    position: relative;
+    background: #d3d3d3 url("../img/Codeacademy.jpg") center center;
+    min-height: 300px;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
+}
+
+body{
+	background-color:#ececec
+}
+h1{
+	text-align:center;
+	font-size: 50px;
+}
+#name{
+	font-size:20px;
+}
+#tags{
+	display: inline-block;	
+}
