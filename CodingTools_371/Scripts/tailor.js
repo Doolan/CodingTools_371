@@ -26,6 +26,7 @@ $(document).ready(function () {
 // --------------------- Models ---------------------------------//
 var Task = function (text) {
     var self = this;
+    self.id = text.ToolId;
     self.name = text.Name;
     self.url = text.Url;
     self.Description = text.Description;
@@ -33,6 +34,8 @@ var Task = function (text) {
     self.grades = ko.observableArray([]);
     self.displayTechnology = ko.observableArray([]);
     self.displayGrades = ko.observableArray([]);
+
+    self.descPageUrl = '../Home/Tool?ID=' + self.id;
 
     self.SetFilterOptions = function(data)
     {
@@ -138,7 +141,7 @@ var TailorMainModel = function (data) {
 
     self.headers = [
         { title: 'Name', sortPropertyName: 'name', asc: true },
-        { title: 'Url', sortPropertyName: 'url', asc: true },
+        //{ title: 'Url', sortPropertyName: 'url', asc: true },
         { title: 'Technology', sortPropertyName: 'technology', asc: true },
         { title: 'Grades', sortPropertyName: 'grades', asc: true }
     ];
@@ -160,6 +163,7 @@ var TailorMainModel = function (data) {
             return false;
         return true;
     }
+
     //move to onload later
     self.gradeView = ko.observable(true);
     if (getUrlParameter('Length') != 0) {
@@ -295,11 +299,15 @@ var JSONLISTDATA = [
 
 var filterArrayProperty = function (array, value) {
     if (array != null && array.length > 0) {
-        if ($.inArray(value, array) < 0) {
-            return false;
+        //if ($.inArray(value, array) < 0) {
+        //    return false;
+        //}
+        for (var i = 0; i < array.length; i++) {
+            if (array[i]['TagValue'] === value)
+                return true;
         }
     }
-    return true;
+    return false;
 }
 
 var filterObjectArrayArrayOverlap = function (objArray, attr, array) {

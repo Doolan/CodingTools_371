@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "viewTool";
+}
+
+
+<link rel="stylesheet" type="text/css" href="../../Content/Tools.css" />
+<script type="text/javascript" src="../../scripts/tool.js"></script>
+
+<a href="#" data-bind="attr:{href: url}" target="_blank" id="link">
+    <div class="jumbotron" data-bind="style: {backgroundImage: 'url(' + imageUrl +')'}">
+        <div class="container">
+            <!-- <h1 data-bind="text: siteInfo().name"></h1> -->
+        </div>
+    </div>
+</a>
+
+<div class="container">
+    <h1 style="text-align: left" data-bind="text:name"></h1>
+    <br />
+    <div class=" tags-container" data-bind="foreach:tags">
+        <div class="btn btn-default" data-bind="text:name"></div>
+    </div>
+</div>
+<br />
+<div class="container">
+    <div id="about" data-bind="text: desc">
+
+    </div>
+</div>
+
+<div class="container">
+    <div id="reviews">
+
+    </div>
+</div>

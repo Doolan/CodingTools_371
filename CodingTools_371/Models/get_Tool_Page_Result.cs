@@ -10,18 +10,16 @@
 namespace CodingTools_371.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Tool_View
+    public partial class get_Tool_Page_Result
     {
-        public int ToolID { get; set; }
+        public int ToolId { get; set; }
         public string Name { get; set; }
         public string URL { get; set; }
         public string Description { get; set; }
         public string ImgPath { get; set; }
         public string TagName { get; set; }
         public string TagValue { get; set; }
-        public string CategoryName { get; set; }
         public Nullable<int> TagId { get; set; }
         public Nullable<int> TagCategoryId { get; set; }
     }

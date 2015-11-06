@@ -14,6 +14,7 @@
           <Property Name="Content" Type="nvarchar(max)" />
           <Property Name="ToolID" Type="int" Nullable="false" />
           <Property Name="CreatorID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="ReviewTags">
           <Key>
@@ -83,6 +84,8 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Property Name="TagName" Type="nvarchar(max)" />
           <Property Name="TagValue" Type="nvarchar" MaxLength="10" />
           <Property Name="CategoryName" Type="nvarchar(max)" />
+          <Property Name="TagId" Type="int" />
+          <Property Name="TagCategoryId" Type="int" />
         </EntityType>
         <Association Name="FK_Reviews_ToTools">
           <End Role="Tools" Type="Self.Tools" Multiplicity="1" />
@@ -169,6 +172,9 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           </ReferentialConstraint>
         </Association>
         <Function Name="get_TagList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="get_Tool_Page" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ToolId" Type="int" Mode="In" />
+        </Function>
         <Function Name="get_ToolList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="codingtoolsdevModelStoreContainer">
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
@@ -187,7 +193,9 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
     [Tool_View].[ImgPath] AS [ImgPath], 
     [Tool_View].[TagName] AS [TagName], 
     [Tool_View].[TagValue] AS [TagValue], 
-    [Tool_View].[CategoryName] AS [CategoryName]
+    [Tool_View].[CategoryName] AS [CategoryName], 
+    [Tool_View].[TagId] AS [TagId], 
+    [Tool_View].[TagCategoryId] AS [TagCategoryId]
     FROM [dbo].[Tool_View] AS [Tool_View]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Reviews_ToTools" Association="Self.FK_Reviews_ToTools">
@@ -235,6 +243,7 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <NavigationProperty Name="Tool" Relationship="Self.FK_Reviews_ToTools" FromRole="Reviews" ToRole="Tools" />
           <NavigationProperty Name="User" Relationship="Self.FK_Reviews_ToUsers" FromRole="Reviews" ToRole="Users" />
           <NavigationProperty Name="ReviewTags" Relationship="Self.FK_ReviewTags_ToReviews" FromRole="Reviews" ToRole="ReviewTags" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReviewTag">
           <Key>
@@ -313,6 +322,8 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Property Name="TagName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TagValue" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="CategoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TagId" Type="Int32" />
+          <Property Name="TagCategoryId" Type="Int32" />
         </EntityType>
         <Association Name="FK_Reviews_ToTools">
           <End Role="Tools" Type="Self.Tool" Multiplicity="1" />
@@ -437,6 +448,9 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           </AssociationSet>
           <FunctionImport Name="get_ToolList" ReturnType="Collection(codingtoolsdevModel.get_ToolList_Result)" />
           <FunctionImport Name="get_TagList" ReturnType="Collection(codingtoolsdevModel.get_TagList_Result)" />
+          <FunctionImport Name="get_Tool_Page" ReturnType="Collection(codingtoolsdevModel.get_Tool_Page_Result)">
+            <Parameter Name="ToolId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="get_ToolList_Result">
           <Property Type="Int32" Name="ToolID" Nullable="false" />
@@ -455,6 +469,17 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Property Type="String" Name="CategoryName" Nullable="false" />
           <Property Type="String" Name="ImgPath" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="get_Tool_Page_Result">
+          <Property Type="Int32" Name="ToolId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="String" Name="URL" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ImgPath" Nullable="true" />
+          <Property Type="String" Name="TagName" Nullable="true" />
+          <Property Type="String" Name="TagValue" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="TagId" Nullable="true" />
+          <Property Type="Int32" Name="TagCategoryId" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -464,6 +489,7 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <EntitySetMapping Name="Reviews">
             <EntityTypeMapping TypeName="codingtoolsdevModel.Review">
               <MappingFragment StoreEntitySet="Reviews">
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ReviewId" ColumnName="ReviewId" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
@@ -534,6 +560,8 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <EntitySetMapping Name="Tool_View">
             <EntityTypeMapping TypeName="codingtoolsdevModel.Tool_View">
               <MappingFragment StoreEntitySet="Tool_View">
+                <ScalarProperty Name="TagCategoryId" ColumnName="TagCategoryId" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
                 <ScalarProperty Name="ToolID" ColumnName="ToolID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="URL" ColumnName="URL" />
@@ -567,6 +595,21 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_Tool_Page" FunctionName="codingtoolsdevModel.Store.get_Tool_Page">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="codingtoolsdevModel.get_Tool_Page_Result">
+                <ScalarProperty Name="ToolId" ColumnName="ToolId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="TagValue" ColumnName="TagValue" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="TagCategoryId" ColumnName="TagCategoryId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
