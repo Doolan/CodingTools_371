@@ -81,7 +81,22 @@ namespace CodingTools_371.Controllers
         }
 
         [HttpGet]
+        public string GetReviewList(string toolIdString)
+        {
+            int toolId;
+            if (!int.TryParse(toolIdString, out toolId))
+                throw new InvalidDataException("Tool Id did not parse to INT");
+
+            var db = new codingtoolsdevEntities();
+            var list = db.get_ReviewsList(toolId).ToList();
+            return new JavaScriptSerializer().Serialize(list);
+        }
+
+        
+
         public string GetProjectInfo(string toolIdString)
+
+        
         {
             int toolId;
             if (!int.TryParse(toolIdString, out toolId))
@@ -113,6 +128,7 @@ namespace CodingTools_371.Controllers
             };
         }
         
+        //private List<ListModel.GetListModel> ToolListHelper(List<get_ToolList_Result> list)
         private List<ListModel.GetListModel> _ToolListHelper(List<get_ToolList_Result> list)
         {
             var cToolId = 0;
@@ -154,7 +170,7 @@ namespace CodingTools_371.Controllers
                     cCatGroup.Tags = tagList;
                     cCategoryList.Add(cCatGroup);
                     cCatGroup = new ListModel.ToolCategoryGroup {CategoryName = row.CategoryName};
-                    tagList = new List<ListModel.ToolTagObject> { new ListModel.ToolTagObject { TagName = row.TagName } };
+                    tagList = new List<ListModel.ToolTagObject> { new ListModel.ToolTagObject { TagName = row.TagName, TagValue = row.TagValue } };
                 }
                 else
                 {
@@ -202,9 +218,7 @@ namespace CodingTools_371.Controllers
             });
             return catList;
         }
-#endregion 
-
-
+        #endregion
         #endregion
 
     }

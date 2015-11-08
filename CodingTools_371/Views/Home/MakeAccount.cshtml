@@ -3,38 +3,36 @@
     ViewBag.Title = "Account Creation";
 }
 <link href="~/Content/Login.css" rel="stylesheet" type="text/css"/>
+<script src="../../Scripts/makeaccount.js"></script>
 
 <h2>Account Creation</h2>
 
 <div class="form-area">
     <form data-example-id="simple-input-groups">
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <span class="input-group-addon" id="basic-addon1">Username</span>
-            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Username"></input>
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Username" data-bind="value: username" />
         </div>
-        <br></br>
+        <br />
 
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <span class="input-group-addon" id="basic-addon1">Email</span>
-            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Email"></input>
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Email" data-bind="value: email" />
 
         </div>
-        <br></br>
+        <br />
 
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <span class="input-group-addon" id="basic-addon1">Password</span>
-            <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Password"></input>
+            <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Password" data-bind="value: password" />
 
         </div>
-        <br></br>
+        <br />
 
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <span class="input-group-addon" id="basic-addon1">Confirm Password</span>
-            <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Confirm Password"></input>
+            <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Confirm Password" data-bind="value: confirmPassword" />
 
         </div>
-        <br></br>
+        <br />
 
+        @Html.ActionLink("Sign Up", "MakeAccount", "", new { @class = "btn btn-default btn-lg" })
         @Html.ActionLink("Log In", "Index", "", new { @class = "btn btn-default btn-lg" })
 
         <!--<button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="login-but">

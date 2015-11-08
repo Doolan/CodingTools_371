@@ -3,14 +3,38 @@
         "reviewTitle": 'SUPERCOOL REVIEW TITLE',
         "reviewerName": 'COOL DUDE',
         "reviewDate": 'OCT 1, 2015',
-        "reviewBody": 'BLA BLA BLA'
+        "reviewBody": 'BLA BLA BLA',
     };
 
+    var rTitle = 'title';
+    var reviewTitle = ko.observable(rTitle);
+
+    var reviewList = null;
+    
+    $.ajax({
+        url: 'GetReviewList',
+        type: 'GET',
+        data:{'toolIdString': 1},
+        dataType: 'JSON',
+        success: function (data) {
+            console.log(data);
+            reviewList = data;
+
+        },
+        error: function (request, status, error) {
+            console.log('failed get', request, status, error);
+        }
+    });
+
+
+
+    /*
     this.reviewTitle = ko.observable(JSONSAMPLE.reviewTitle);
     this.reviewerName = ko.observable(JSONSAMPLE.reviewerName);
     this.reviewDate = ko.observable(JSONSAMPLE.reviewDate);
     this.reviewBody = ko.observable(JSONSAMPLE.reviewBody);
-    
+    */
+
 
     
 
@@ -25,32 +49,9 @@
 }
 
 $(document).ready(function () {
-   // window.KO_MODEL = TailorMainModel({ "gradeArray": JSONGRADEARRAY, "technology": JSONTECHDATA, "toolList": JSONLISTDATA });
-    //ko.applyBindings(window.KO_MODEL);
-
-    console.log("js loading");
-
     //var parsed = JSON.parse(JSONSAMPLE);
 
-
-
     //AppViewModel.reviewTitle(JSONSAMPLE.reviewTitle);
-
-    /*
-    $.ajax({
-        url: 'GetToolList',
-        type: 'GET',
-        dataType: 'JSON',
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (request, status, error) {
-            console.log('failed get', request, status, error);
-        }
-    });
-    */
-
-
 
     var JSONLISTDATA = [
     {
@@ -79,8 +80,5 @@ $(document).ready(function () {
     }
     ];
     
-
-    // Activates knockout.js
     ko.applyBindings(new AppViewModel());
-
 });

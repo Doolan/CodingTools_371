@@ -5,7 +5,7 @@ var KO_MODEL;
 $(document).ready(function () {
     //window.KO_MODEL = TailorMainModel({ "gradeArray": JSONGRADEARRAY, "technology": JSONTECHDATA, "toolList": JSONLISTDATA });
     //ko.applyBindings(window.KO_MODEL);
-
+    $('.body-content').hide();
     $.ajax({
         url: 'GetToolList',
         type: 'GET',
@@ -14,6 +14,7 @@ $(document).ready(function () {
             console.log(data);
             window.KO_MODEL = TailorMainModel(data);
             ko.applyBindings(window.KO_MODEL);
+            $('.body-content').show();
         },
         error: function(request, status, error) {
             console.log('failed get', request, status, error);
@@ -42,10 +43,12 @@ var Task = function (text) {
         for (var i = 0; i < data.length; i++)
         {
             if (data[i]['CategoryName'] === 'Technology') {
+                //self.technology($.map(data[i]['Tags'], function (text) { return ' ' + text['TagValue'] }));
                 self.technology(data[i]['Tags']);
                 self.displayTechnology($.map(data[i]['Tags'], function (text) { return ' ' + text['TagName'] }));
             }
             if (data[i]['CategoryName'] === 'Grades') {
+                //self.grades($.map(data[i]['Tags'], function (text) { return ' ' + text['TagValue'] }));
                 self.grades(data[i]['Tags']);
                 self.displayGrades($.map(data[i]['Tags'], function(text) { return ' ' + text['TagName'] }));
             }
@@ -170,131 +173,6 @@ var TailorMainModel = function (data) {
         self.skipToList();
     }
 };
-
-
-//var ListModel = function (data) {
-//   // var self = this;
-//   // self.listGridData = ko.observableArray($.map(data, function (text) { return new Task(text) }));
-//   // self.listFilterData = ko.observableArray($.map(data, function (text) { return new Task(text) }));
-//   // self.grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-//   // self.technology = ['Andriod', 'Chomebook', 'iPads', 'Windows'];
-//    //self.filters = ko.observableArray();
-//    $.ajax({
-//        dataType: 'json',
-//        url: JSONFILEPATH_Filters,
-//        success: function (data) {
-//            self.filters($.map(data, function (text) { return new FilterGroups(text) }));
-//        },
-//        error: function (request, status, error) {
-//            console.log('JSON file load unsuccessful', status, request, error);
-//        }
-//    });
-//    //self.headers = [
-//	//	{ title: 'Name', sortPropertyName: 'name', asc: true },
-//	//	{ title: 'Url', sortPropertyName: 'url', asc: true },
-//	//	{ title: 'Technology', sortPropertyName: 'technology', asc: true },
-//	//	{ title: 'Grades', sortPropertyName: 'grades', asc: true }
-//    //];
-//    //self.sort = function (header, event) {
-//    //    var prop = header.sortPropertyName;
-//    //    var asc = header.asc;
-//    //    header.asc = !header.asc;
-//    //    var ascSort = function (a, b) { return a[prop] < b[prop] ? -1 : a[prop] > b[prop] ? 1 : 0; };
-//    //    var descSort = function (a, b) { return ascSort(b, a); };
-//    //    var sortFunc = asc ? ascSort : descSort;
-//    //    self.listFilterData.sort(sortFunc);
-//    //}
-//};
-
-/**--------------SAMPLE DATA-------------------**/
-var JSONGRADEARRAY = [
-	{
-	    "name": 'Kindergarten',
-	    "value": 0
-	},
-	{
-	    "name": 1,
-	    "value": 1
-	},
-	{
-	    "name": 2,
-	    "value": 2
-	},
-	{
-	    "name": 3,
-	    "value": 3
-	},
-	{
-	    "name": 4,
-	    "value": 4
-	},
-	{
-	    "name": 5,
-	    "value": 5
-	},
-	{
-	    "name": 6,
-	    "value": 6
-	},
-	{
-	    "name": 7,
-	    "value": 7
-	},
-	{
-	    "name": 8,
-	    "value": 8
-	}
-];
-
-var JSONTECHDATA = [
-	{
-	    "name": 'Windows Computers',
-	    "imgPath": '../../Images/Tailor/windows.jpg',
-	    "value": 'Windows'
-	},
-	{
-	    "name": 'Chromebooks',
-	    "imgPath": '../../Images/Tailor/chromebook.jpg',
-	    "value": 'Chomebook'
-	},
-	{
-	    "name": 'Android Tablets',
-	    "imgPath": '../../Images/Tailor/android.jpg',
-	    "value": 'Android'
-	},
-	{
-	    "name": 'iPads',
-	    "imgPath": '../../Images/Tailor/iPad.jpg',
-	    "value": 'iPad'
-	}
-];
-
-var JSONLISTDATA = [
-    {
-        "name": 'Codecademy',
-        "url": 'www.codecademy.com',
-        "technology": ['Chomebook', 'Windows'],
-        "grades": [9, 10, 11, 12]
-    },
-    {
-        "name": 'code.org',
-        "url": 'www.code.org',
-        "technology": ['Chomebook', 'Windows'],
-        "grades": [0, 1, 2, 3, 4, 5, 6]
-    },
-    {
-        "name": 'Code Combat',
-        "url": 'www.codecombat.com',
-        "technology": ['Chomebook', 'Windows'],
-        "grades": [4, 5, 6]
-    },
-    {
-        "name": 'HopScotch',
-        "url": 'www.gethopscotch.com',
-        "technology": ['iPad'],
-        "grades": [0,2, 3, 4, 5]
-    }
-];
 
 
 var filterArrayProperty = function (array, value) {

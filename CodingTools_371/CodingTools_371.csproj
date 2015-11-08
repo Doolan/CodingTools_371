@@ -196,6 +196,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CodingTools.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\get_ReviewList_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\get_Reviews1_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\get_ReviewsList_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\get_Reviews_Result.cs">
+      <DependentUpon>CodingTools.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\get_TagList_Result.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
@@ -206,6 +218,7 @@
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ReviewModel.cs" />
     <Compile Include="Models\ListModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Review.cs">
@@ -254,6 +267,13 @@
     <Content Include="Images\Tailor\chromebook.jpg" />
     <Content Include="Images\Tailor\iPad.jpg" />
     <Content Include="Images\Tailor\windows.jpg" />
+    <Content Include="Images\Tool\Code.org.jpeg" />
+    <Content Include="Images\Tool\Codeacademy.jpg" />
+    <Content Include="Images\Tool\CodeCombat.com.jpg" />
+    <Content Include="Images\Tool\hopscotch.jpg" />
+    <Content Include="Images\Tool\kodable.com.jpg" />
+    <Content Include="Images\Tool\scratch.jpg" />
+    <Content Include="Images\Tool\stencyle.com.jpg" />
     <Content Include="Models\CodingTools.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CodingTools.edmx</DependentUpon>
@@ -285,7 +305,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Scripts\reviewbox.js" />
+    <Content Include="Scripts\makeaccount.js" />
     <Content Include="Scripts\tailor.js" />
     <Content Include="Scripts\tool.js" />
     <Content Include="Scripts\_references.js" />
@@ -334,7 +356,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\Tool\" />
     <Folder Include="Views\Tools\" />
   </ItemGroup>
   <ItemGroup>
