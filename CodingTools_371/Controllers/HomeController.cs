@@ -108,12 +108,10 @@ namespace CodingTools_371.Controllers
             return new JavaScriptSerializer().Serialize(_ProjectInfoHelper(list));
         }
 
-        public string AddUser(string name, string email, string title, string username)
+        public int AddUser(string name, string email, string title, string username)
         {
             var db = new codingtoolsdevEntities();
-            var list = db.insert_user(name, email, title, username).ToList();
-
-            return new JavaScriptSerializer().Serialize(_ProjectInfoHelper(list));
+            return db.insert_user(name, email, title, username);
         }
 
         #region helper Methods

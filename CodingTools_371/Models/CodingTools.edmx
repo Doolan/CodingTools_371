@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="codingtoolsdevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="codingtoolsdevModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Reviews">
           <Key>
             <PropertyRef Name="ReviewId" />
@@ -180,6 +180,19 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Parameter Name="ToolId" Type="int" Mode="In" />
         </Function>
         <Function Name="get_ToolList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="insert_review" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Rating" Type="decimal" Mode="In" />
+          <Parameter Name="Content" Type="nvarchar" Mode="In" />
+          <Parameter Name="ToolID" Type="int" Mode="In" />
+          <Parameter Name="CreatorID" Type="int" Mode="In" />
+          <Parameter Name="Title" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="insert_user" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Title" Type="nvarchar" Mode="In" />
+          <Parameter Name="Username" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="codingtoolsdevModelStoreContainer">
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReviewTags" EntityType="Self.ReviewTags" Schema="dbo" store:Type="Tables" />
@@ -461,7 +474,20 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Parameter Name="ToolId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="get_ReviewsList" ReturnType="Collection(codingtoolsdevModel.get_ReviewsList_Result)">
-            <Parameter Name="ToolId" Mode="In" Type="Int32" />
+          <Parameter Name="ToolId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="insert_review">
+            <Parameter Name="Rating" Mode="In" Type="Decimal" />
+            <Parameter Name="Content" Mode="In" Type="String" />
+            <Parameter Name="ToolID" Mode="In" Type="Int32" />
+            <Parameter Name="CreatorID" Mode="In" Type="Int32" />
+            <Parameter Name="Title" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="insert_user">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Title" Mode="In" Type="String" />
+            <Parameter Name="Username" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="get_ToolList_Result">
@@ -669,6 +695,8 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="insert_review" FunctionName="codingtoolsdevModel.Store.insert_review" />
+          <FunctionImportMapping FunctionImportName="insert_user" FunctionName="codingtoolsdevModel.Store.insert_user" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

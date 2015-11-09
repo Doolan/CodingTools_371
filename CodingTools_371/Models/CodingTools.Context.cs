@@ -41,11 +41,6 @@ namespace CodingTools_371.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ToolList_Result>("get_ToolList");
         }
     
-        public virtual ObjectResult<get_Reviews_Result> get_Reviews()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Reviews_Result>("get_Reviews");
-        }
-    
         public virtual ObjectResult<get_ReviewList_Result> get_ReviewList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewList_Result>("get_ReviewList");
@@ -82,23 +77,51 @@ namespace CodingTools_371.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewsList_Result>("get_ReviewsList", toolIdParameter);
         }
-
-        public virtual int insert_user(Nullable<int> name, Nullable<int> email, Nullable<int> title, Nullable<int> username)
+    
+        public virtual int insert_review(Nullable<decimal> rating, string content, Nullable<int> toolID, Nullable<int> creatorID, string title)
         {
-            var nameParameter = name.HasValue ?
-                new ObjectParameter("Name", name):
-                new ObjectParameter("Name", typeof(string));
-            var emailParameter = name.HasValue ?
-                new ObjectParameter("Email", email):
-                new ObjectParameter("Email", typeof(string));
-            var titleParameter = name.HasValue ?
-                new ObjectParameter("Title", title):
+            var ratingParameter = rating.HasValue ?
+                new ObjectParameter("Rating", rating) :
+                new ObjectParameter("Rating", typeof(decimal));
+    
+            var contentParameter = content != null ?
+                new ObjectParameter("Content", content) :
+                new ObjectParameter("Content", typeof(string));
+    
+            var toolIDParameter = toolID.HasValue ?
+                new ObjectParameter("ToolID", toolID) :
+                new ObjectParameter("ToolID", typeof(int));
+    
+            var creatorIDParameter = creatorID.HasValue ?
+                new ObjectParameter("CreatorID", creatorID) :
+                new ObjectParameter("CreatorID", typeof(int));
+    
+            var titleParameter = title != null ?
+                new ObjectParameter("Title", title) :
                 new ObjectParameter("Title", typeof(string));
-            var usernameParameter = name.HasValue ?
-                new ObjectParameter("Username", username):
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_review", ratingParameter, contentParameter, toolIDParameter, creatorIDParameter, titleParameter);
+        }
+    
+        public virtual int insert_user(string name, string email, string title, string username)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var titleParameter = title != null ?
+                new ObjectParameter("Title", title) :
+                new ObjectParameter("Title", typeof(string));
+    
+            var usernameParameter = username != null ?
+                new ObjectParameter("Username", username) :
                 new ObjectParameter("Username", typeof(string));
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<int>("insert_user", toolIdParameter);
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_user", nameParameter, emailParameter, titleParameter, usernameParameter);
         }
     }
 }
