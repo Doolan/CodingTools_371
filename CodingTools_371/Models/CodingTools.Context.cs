@@ -41,6 +41,11 @@ namespace CodingTools_371.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ToolList_Result>("get_ToolList");
         }
     
+        public virtual ObjectResult<get_Reviews_Result> get_Reviews()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Reviews_Result>("get_Reviews");
+        }
+    
         public virtual ObjectResult<get_ReviewList_Result> get_ReviewList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewList_Result>("get_ReviewList");
@@ -76,6 +81,24 @@ namespace CodingTools_371.Models
                 new ObjectParameter("ToolId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewsList_Result>("get_ReviewsList", toolIdParameter);
+        }
+
+        public virtual int insert_user(Nullable<int> name, Nullable<int> email, Nullable<int> title, Nullable<int> username)
+        {
+            var nameParameter = name.HasValue ?
+                new ObjectParameter("Name", name):
+                new ObjectParameter("Name", typeof(string));
+            var emailParameter = name.HasValue ?
+                new ObjectParameter("Email", email):
+                new ObjectParameter("Email", typeof(string));
+            var titleParameter = name.HasValue ?
+                new ObjectParameter("Title", title):
+                new ObjectParameter("Title", typeof(string));
+            var usernameParameter = name.HasValue ?
+                new ObjectParameter("Username", username):
+                new ObjectParameter("Username", typeof(string));
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<int>("insert_user", toolIdParameter);
         }
     }
 }
