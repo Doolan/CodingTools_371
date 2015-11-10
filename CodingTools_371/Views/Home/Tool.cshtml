@@ -28,7 +28,7 @@
 
     </div>
 </div>
-
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#reviewModal">Write a Review</button>
 <div class="review-box" data-bind="foreach:reviewArray()">
     <div class="review">
         <h4 class="review-title"><strong data-bind="text: title"></strong> - <span data-bind="text:ratingDisplay"></span></h4>
@@ -50,5 +50,59 @@
             </p>
             <p data-bind="text: content"></p>
         </div>
+    </div>
+</div>
+<!--Review Modal-->
+<div id="reviewModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Write a Review for <span data-bind="text:name"></span></h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control-static form-control" placeholder="Review Title" style="margin-bottom: 1em" />
+                <div class="radio-group" style="display: inline">
+                    <div class="radio-box">
+                        <label>
+                            <input type="radio"  required value="5" />
+                            5
+                        </label>
+                    </div>
+                    <div class="radio-box">
+                        <label>
+                            <input type="radio"  required value="4" />
+                            4
+                        </label>
+                    </div>
+                    <div class="radio-box">
+                        <label>
+                            <input type="radio"  required value="3" />
+                            3
+                        </label>
+                    </div>
+                    <div class="radio-box">
+                        <label>
+                            <input type="radio"  required value="2" />
+                            2
+                        </label>
+                    </div>
+                    <div class="radio-box">
+                        <label>
+                            <input type="radio" required value="1" />
+                            1
+                        </label>
+                    </div>
+                </div>
+                <textarea class="form-control-static form-control" rows="3" max-length =" 240" placeholder="Review Description"style="margin-top: 1em"></textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Submit</button>
+            </div>
+        </div>
+
     </div>
 </div>
