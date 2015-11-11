@@ -15,6 +15,7 @@ namespace CodingTools_371.Controllers
 {
     public class HomeController : Controller
     {
+        #region PageCalls
         public ActionResult Index()
         {
             return View();
@@ -63,6 +64,7 @@ namespace CodingTools_371.Controllers
         {
             return View();
         }
+        #endregion
 
         #region AJAX CALLS
 
@@ -92,11 +94,8 @@ namespace CodingTools_371.Controllers
             return new JavaScriptSerializer().Serialize(list);
         }
 
-        
-
+        [HttpGet]
         public string GetProjectInfo(string toolIdString)
-
-        
         {
             int toolId;
             if (!int.TryParse(toolIdString, out toolId))
@@ -119,6 +118,14 @@ namespace CodingTools_371.Controllers
                 throw new InvalidDataException("Username cannot be null");
 
             return db.insert_user(name, email, title, username);
+	}
+
+        [HttpPost]
+        public string SubmitReview(int userId, int toolId, string title, int rating, string description)
+        {
+            var db = new codingtoolsdevEntities();
+            var reviewId = db.submit_Quiz_Answers(userId, toolId, title, rating, description);
+            return GetReviewList(toolId+"");
         }
 
         #region helper Methods
@@ -231,7 +238,6 @@ namespace CodingTools_371.Controllers
             });
             return catList;
         }
-        #endregion
         #endregion
 
     }

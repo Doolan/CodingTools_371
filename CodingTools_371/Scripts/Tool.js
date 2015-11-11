@@ -42,6 +42,45 @@ var Review = function (data) {
     self.ratingDisplay = self.rating + '/5';
 }
 
+var ReviewModal = function(parent) {
+    var self = this;
+    self.parent = parent;
+    self.title = ko.observable();
+    self.rating = ko.observable();
+    self.description = ko.observable();
+
+    self.submitReview = function() {
+        //$('#modal-form').checkValidity();
+        if ($('form')[0].checkValidity()) {
+            var packet = {
+                'userId': 32,
+                'toolId': self.parent.toolIdString,
+                'title': self.title(),
+                'rating': self.rating(),
+                'description': self.description()
+            }
+            console.log(packet);
+            $.ajax({
+                url: 'SubmitReview',
+                type: 'Post',
+                data: packet,
+                dataType: 'JSON',
+                success: function(data) {
+                    console.log('new reviews', data);
+                    self.parent.reviewArray($.map(data, function (text) { return new Review(text) }));
+                    $('#reviewModal').hide();
+                },
+                error: function(request, status, error) {
+                    console.log('failed get', request, status, error);
+                }
+            });
+        } else {
+            $('<input type="submit" id="tempbutton">').hide().appendTo($('#modal-form')).click().remove();
+        }
+
+    }
+}
+
 var ViewToolsMain = function (data) {
     var self = this;
     self.toolIdString = data.ToolId;
@@ -55,6 +94,7 @@ var ViewToolsMain = function (data) {
     self.showReviews = ko.observable(false);
     self.reviewArray = ko.observableArray([]);
 
+    self.modal = ko.observable(new ReviewModal(self));
 
     self.loadReviews = function() {
         $.ajax({
@@ -73,9 +113,8 @@ var ViewToolsMain = function (data) {
             }
         });
     };
+
     self.loadReviews();
-
-
 };
 
 
