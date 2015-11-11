@@ -21,33 +21,36 @@ var AppViewModel = function () {
 
     self.SubmitAddUser = function () {
         console.log("SubmitAddUser");
+        if ($('form')[0].checkValidity()) {
 
-        console.log("name " + self.name());
-        console.log("email " + self.email());
-        console.log("title " + self.title());
-        console.log("username " + self.username());
-        console.log("password " + self.password());
-        //console.log("confirmPassword " + self.confirmPassword());
-
-        $.ajax({
-            url: 'AddUser',
-            type: 'GET',
-            data: {
-                'Name': self.name(),
-                'Email': self.email(),
-                'Title': self.title(),
-                'Username': self.username(),
-                'Password': self.password()
-            },
-            dataType: 'JSON',
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (request, status, error) {
-                console.log('failed get', request, status, error);
-            }
-        });
+            console.log("name " + self.name());
+            console.log("email " + self.email());
+            console.log("title " + self.title());
+            console.log("username " + self.username());
+            console.log("password " + self.password());
+            //console.log("confirmPassword " + self.confirmPassword());
 
 
+            $.ajax({
+                url: 'AddUser',
+                type: 'GET',
+                data: {
+                    'Name': self.name(),
+                    'Email': self.email(),
+                    'Title': self.title(),
+                    'Username': self.username(),
+                    'Password': self.password()
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (request, status, error) {
+                    console.log('failed get', request, status, error);
+                }
+            });
+        } else {
+            $('<input type="submit" id="tempbutton">').hide().appendTo($('#account-form')).click().remove();
+        }
     }
 }

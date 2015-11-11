@@ -118,6 +118,9 @@ namespace CodingTools_371.Controllers
         {
             var db = new codingtoolsdevEntities();
 
+            if (password==null)
+                throw new InvalidDataException("Password cannot be null");
+
             //encryption
             byte[] salt = (new Rfc2898DeriveBytes(password, 64)).Salt;
             byte[] hash = (new Rfc2898DeriveBytes(password, salt)).GetBytes(64);
