@@ -36,7 +36,8 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">Grades</div>
                             <div class="panel-body" >
-                                <div id="gradesOptions" data-bind="foreach: gradeArray">
+                                <div id="gradesOptions" style=" max-height: 10em;"
+                                      data-bind="foreach: gradeArray">
                                     <div class="checkbox">
                                         <label>
                                             <input type="checkbox" data-bind="checked: selected"/>
@@ -44,8 +45,12 @@
                                         </label>
                                     </div>
                                 </div>
-                                @*<p class="toggleMoreLess">Show more</p>
-                                <p class="toggleMoreLess">Show less</p>*@
+                                <!-- ko if: gradesShortView-->
+                                <p class="toggleMoreLess" data-bind="click:gradesToggle">Show more</p>
+                                <!-- /ko -->
+                                <!-- ko if: gradesLongView -->
+                                <p class="toggleMoreLess" data-bind="click:gradesToggle">Show less</p>
+                                <!-- /ko -->
                             </div>
                         </div>
                         <div class="panel panel-primary">

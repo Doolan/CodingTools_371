@@ -112,6 +112,7 @@ var TailorMainModel = function (data) {
             }
         }
     }
+
     self.SetFilterOptions(data.TagList);
 
     self.tailorAdvanceClick = function() {
@@ -167,9 +168,27 @@ var TailorMainModel = function (data) {
 
     //move to onload later
     self.gradeView = ko.observable(true);
-    if (getUrlParameter('Length') != 0) {
+    if (getUrlParameter('Length') !== 0) {
         self.skipToList();
     }
+
+    /** ---- List Length toggling   ---------**/
+    self.gradesShortView = ko.observable(true);
+    self.gradesLongView = ko.observable(false);
+
+    self.gradesToggle = function () {
+        console.log('hit');
+        if (self.gradesShortView()) {
+            self.gradesShortView(false);
+            self.gradesLongView(true);
+            $('#gradesOptions').css({ 'max-height': '' });
+        } else {
+            self.gradesShortView(true);
+            self.gradesLongView(false);
+            $('#gradesOptions').css({ 'max-height': '10em' });
+        }
+    }
+
 };
 
 var filterArrayProperty = function (array, value) {

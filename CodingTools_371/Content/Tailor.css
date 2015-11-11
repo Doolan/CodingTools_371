@@ -4,8 +4,14 @@
 .toggleMoreLess {
     text-decoration: underline;
     color: grey;
+    font-size: .85em;
 }
-/*#gradesOptions {
+
+.toggleMoreLess:hover {
+    color: lightblue;
+    cursor: pointer;
+}
+#gradesOptions {
     overflow: hidden;
-    max-height: 40px;
-}*/
+   
+}
