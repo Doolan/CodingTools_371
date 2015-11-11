@@ -1,4 +1,4 @@
-IF OBJECT_ID('insert_user', 'P') IS NOT NULL
+﻿IF OBJECT_ID('insert_user', 'P') IS NOT NULL
 DROP PROCEDURE insert_user
 GO
 
@@ -13,4 +13,6 @@ INSERT INTO [Users]
 ([Name], [Email], [Title], [Username])
 VALUES (@Name, @Email, @Title, @Username)
 
-RETURN 0
+SELECT @@IDENTITY AS 'Identity';
+
+RETURN SELECT id FROM [identity]

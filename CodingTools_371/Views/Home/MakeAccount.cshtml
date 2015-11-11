@@ -8,15 +8,15 @@
 <h2>Account Creation</h2>
 
 <div class="form-area">
-    <form data-example-id="simple-input-groups">
+    <form role="form" data-example-id="simple-input-groups">
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Name" data-bind="value: name" />
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Name" data-bind="value: name" required />
 
         </div>
         <br />
 
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Email" data-bind="value: email" />
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Email" data-bind="value: email" required />
 
         </div>
         <br />
@@ -29,7 +29,7 @@
 
 
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Username" data-bind="value: username" />
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Username" data-bind="value: username" required />
         </div>
         <br />
 
@@ -52,11 +52,16 @@
         @*
         @Html.ActionLink("Sign Up", "MakeAccount", "", new { @class = "btn btn-default btn-lg", onclick = "SubmitAddUser"})
         *@
-        <button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="login-but" onclick="SubmitAddUser()">
-            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-            Log in
-        </button>
 
+        @*
+        <input type="submit" class="btn btn-default btn-lg" aria-label="Left Align" id="login-but" value="Create Account" />
+        *@
+        
+        <button type="submit" class="btn btn-default btn-lg" aria-label="Left Align" id="login-but" data-bind="click: SubmitAddUser">
+            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+            Submit
+        </button>
+        
 
         @Html.ActionLink("Log In", "Index", "", new { @class = "btn btn-default btn-lg" })
 

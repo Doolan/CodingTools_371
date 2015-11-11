@@ -1,4 +1,12 @@
-﻿function AppViewModel() {
+﻿$(document).ready(function () {
+    console.log("js loading");
+
+    ko.applyBindings(new AppViewModel());
+});
+
+
+
+var AppViewModel = function () {
     var self = this;
     self.name = ko.observable();
     self.email = ko.observable();
@@ -8,31 +16,35 @@
     //self.confirmPassword = ko.observable();
 
 
+
+
+
+    self.SubmitAddUser = function () {
+        console.log("SubmitAddUser");
+
+        console.log("name " + self.name());
+        console.log("email " + self.email());
+        console.log("title " + self.title());
+        console.log("username " + self.username());
+
+        $.ajax({
+            url: 'AddUser',
+            type: 'GET',
+            data: {
+                'Name': self.name(),
+                'Email': self.email(),
+                'Title': self.title(),
+                'Username': self.username()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (request, status, error) {
+                console.log('failed get', request, status, error);
+            }
+        });
+
+
+    }
 }
-
-$(document).ready(function () {
-    console.log("js loading");
-
-    ko.applyBindings(new AppViewModel());
-});
-
-var SubmitAddUser = function () {
-    console.log("SubmitAddUser");
-    $.ajax({
-        url: 'AddUser',
-        type: 'GET',
-        data: {
-            'name': self.name,
-            'email': self.email,
-            'title': self.title,
-            'username': self.username
-        },
-        dataType: 'JSON',
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (request, status, error) {
-            console.log('failed get', request, status, error);
-        }
-    });
-};

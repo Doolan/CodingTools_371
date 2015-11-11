@@ -78,11 +78,11 @@ namespace CodingTools_371.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewsList_Result>("get_ReviewsList", toolIdParameter);
         }
     
-        public virtual int insert_review(Nullable<decimal> rating, string content, Nullable<int> toolID, Nullable<int> creatorID, string title)
+        public virtual int insert_review(Nullable<int> rating, string content, Nullable<int> toolID, Nullable<int> creatorID, string title)
         {
             var ratingParameter = rating.HasValue ?
                 new ObjectParameter("Rating", rating) :
-                new ObjectParameter("Rating", typeof(decimal));
+                new ObjectParameter("Rating", typeof(int));
     
             var contentParameter = content != null ?
                 new ObjectParameter("Content", content) :

@@ -111,6 +111,13 @@ namespace CodingTools_371.Controllers
         public int AddUser(string name, string email, string title, string username)
         {
             var db = new codingtoolsdevEntities();
+            if (name.Equals(null))
+                throw new InvalidDataException("Name cannot be null");
+            if (email.Equals(null))
+                throw new InvalidDataException("Email cannot be null");
+            if (username.Equals(null))
+                throw new InvalidDataException("Username cannot be null");
+
             return db.insert_user(name, email, title, username);
         }
 
