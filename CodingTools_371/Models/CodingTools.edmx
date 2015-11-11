@@ -192,6 +192,13 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Parameter Name="Title" Type="nvarchar" Mode="In" />
           <Parameter Name="Username" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="submit_Quiz_Answers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="ToolId" Type="int" Mode="In" />
+          <Parameter Name="Title" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Rating" Type="int" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="codingtoolsdevModelStoreContainer">
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReviewTags" EntityType="Self.ReviewTags" Schema="dbo" store:Type="Tables" />
@@ -252,7 +259,7 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
             <PropertyRef Name="ReviewId" />
           </Key>
           <Property Name="ReviewId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rating" Type="Decimal" />
+          <Property Name="Rating" Type="Int32" />
           <Property Name="Content" Type="String" MaxLength="240" FixedLength="false" Unicode="true" />
           <Property Name="ToolID" Type="Int32" Nullable="false" />
           <Property Name="CreatorID" Type="Int32" Nullable="false" />
@@ -463,11 +470,6 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
             <End Role="ToolTags" EntitySet="ToolTags" />
           </AssociationSet>
           <FunctionImport Name="get_ToolList" ReturnType="Collection(codingtoolsdevModel.get_ToolList_Result)" />
-          <FunctionImport Name="get_Reviews" ReturnType="Collection(codingtoolsdevModel.get_Reviews_Result)" />
-          <FunctionImport Name="get_ReviewList" ReturnType="Collection(codingtoolsdevModel.get_ReviewList_Result)" />
-          <FunctionImport Name="get_Reviews1" ReturnType="Collection(codingtoolsdevModel.get_Reviews1_Result)">
-            <Parameter Name="ToolId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="get_TagList" ReturnType="Collection(codingtoolsdevModel.get_TagList_Result)" />
           <FunctionImport Name="get_Tool_Page" ReturnType="Collection(codingtoolsdevModel.get_Tool_Page_Result)">
           <Parameter Name="ToolId" Mode="In" Type="Int32" />
@@ -487,6 +489,13 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Title" Mode="In" Type="String" />
             <Parameter Name="Username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="submit_Quiz_Answers" ReturnType="Collection(Decimal)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="ToolId" Mode="In" Type="Int32" />
+            <Parameter Name="Title" Mode="In" Type="String" />
+            <Parameter Name="Rating" Mode="In" Type="Int32" />
+            <Parameter Name="Description" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="get_ToolList_Result">
@@ -536,10 +545,10 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Property Type="Int32" Name="TagCategoryId" Nullable="true" />
         </ComplexType>
         <ComplexType Name="get_ReviewsList_Result">
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="30" />
-          <Property Type="Decimal" Name="Rating" Nullable="true" Precision="18" Scale="0" />
-          <Property Type="String" Name="Content" Nullable="true" />
-          <Property Type="String" Name="Username" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Title" Nullable="false" MaxLength="35" />
+          <Property Type="Int32" Name="Rating" Nullable="true" />
+          <Property Type="String" Name="Content" Nullable="true" MaxLength="240" />
+          <Property Type="String" Name="Username" Nullable="true" MaxLength="20" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -686,6 +695,7 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="insert_review" FunctionName="codingtoolsdevModel.Store.insert_review" />
           <FunctionImportMapping FunctionImportName="insert_user" FunctionName="codingtoolsdevModel.Store.insert_user" />
+          <FunctionImportMapping FunctionImportName="submit_Quiz_Answers" FunctionName="codingtoolsdevModel.Store.submit_Quiz_Answers" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
