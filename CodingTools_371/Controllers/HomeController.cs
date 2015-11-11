@@ -91,7 +91,12 @@ namespace CodingTools_371.Controllers
 
             var db = new codingtoolsdevEntities();
             var list = db.get_ReviewsList(toolId).ToList();
-            return new JavaScriptSerializer().Serialize(list);
+            var reviewList = new ReviewList
+            {
+                Reviews = list,
+                Chart = _ProjectReviewHelper(list)
+            };
+            return new JavaScriptSerializer().Serialize(reviewList);
         }
 
         [HttpGet]
@@ -103,7 +108,7 @@ namespace CodingTools_371.Controllers
 
             var db = new codingtoolsdevEntities();
             var list = db.get_Tool_Page(toolId).ToList();
-            
+
             return new JavaScriptSerializer().Serialize(_ProjectInfoHelper(list));
         }
 
@@ -225,6 +230,63 @@ namespace CodingTools_371.Controllers
             });
             return catList;
         }
+
+
+
+
+        public DataBarChart _ProjectReviewHelper(List<get_ReviewsList_Result> list)
+        {
+            var rating = new Dictionary<int, int>() { { 5, 0 }, { 4, 0 }, { 3, 0 }, { 2, 0 }, { 1, 0 } };
+            decimal sum = 0;
+            foreach (var row in list)
+            {
+                rating[(int) row.Rating] = rating[(int)row.Rating] + 1;
+               sum++;
+            }
+            return _generateDataBarChart(rating);
+        }
+
+
+        public DataBarChart _generateDataBarChart(Dictionary<int, int> rating)
+        {
+            int sum = 0, count = 0, maxCount = 0;
+            string[] colors = { "#88b131", "#99cc00", "#ffcf02", "#ff9f02", "#ff6f31", "#FFFFFF" };
+            string[] rankingWords = { "", "Very Poor", "Poor", "Fair", "Good", "Very Good" };
+            for (var i = 1; i < 6; i++)
+            {
+                sum += i * rating[i];
+                count += rating[i];
+                maxCount = maxCount > rating[i] ? maxCount : rating[i];
+            }
+
+            var chart = new DataBarChart
+            {
+                AverageScore = ((decimal)sum) / Math.Max(count, 1),
+                Rows = new List<DataBarRow>()
+            };
+
+            chart.RankingWord = rankingWords[(int)Math.Floor(chart.AverageScore)] + " - " + rankingWords[(int)Math.Ceiling(chart.AverageScore)];
+
+
+            //set create rows
+            for (var i = 5; i > 0; i--)
+            {
+                var row = new DataBarRow
+                {
+                    Label = i,
+                    NumberOfScore = rating[i],
+                    Width = ((double)rating[i] * 100) / Math.Max(1, maxCount),
+                    ColorCode = colors[5 - i],
+                    RankingWord = rankingWords[i]
+                };
+                chart.Rows.Add(row);
+            }
+
+            return chart;
+        }
+
+
+
         #endregion
         #endregion
 

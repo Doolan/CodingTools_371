@@ -1,0 +1,11 @@
+﻿body {
+}
+
+.toggleMoreLess {
+    text-decoration: underline;
+    color: grey;
+}
+/*#gradesOptions {
+    overflow: hidden;
+    max-height: 40px;
+}*/

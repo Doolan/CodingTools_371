@@ -1,44 +1,42 @@
 ﻿@{
     ViewBag.Title = "Home";
 }
-
-<div class="jumbotron">
-    <h1>&lt; CodingTools / &gt;</h1>
-    @*<p class="lead">Demand for Coding increases everyday. It is becoming an intergral part of Primary and Secondary Education accross the country. 
-        CodingTools matches teachers and students with coding resources to fit their needs.</p>*@
-    <p class="lead">
-        Software Development is one of the fasting growing fields in America. Coding is spreading to classrooms of all grades.
-        <strong>CodingTools matches teachers and students with coding resources to fit their needs.</strong>
-    </p>
-    @*<p class="pull-left"><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a>
-    </p>
-    <p class="pull-right"><a href="http://asp.net" class="btn btn-primary btn-lg">Sign Up &raquo;</a></p>*@
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Explore</h2>
-        <p>
-            Jump to a list of all of our selected tools. Filter down the results by format, grade level, ranking and more!
-        </p>
-        <p>
-            @*<a class="btn btn-default" href="#">Go to List &raquo;</a>*@
-            @Html.ActionLink("Go to List", "Tailor", " ", new { @class = "btn btn-default" })
+<main class="codingtools-masthead masthead" role="main" tabindex="-1">
+    <div class="container masthead-container">
+        <h1><img alt="Brand" src="../../Images/CodingToolsLogo.png" style="height: 5em; border-radius: 5px;" /></h1>
+        <br/>
+        <p class="lead">
+            Software Development is one of the fasting growing fields in America. Coding is spreading to classrooms of all grades.
+            <strong>CodingTools matches teachers and students with coding resources to fit their needs.</strong>
         </p>
     </div>
-    <div class="col-md-4">
-        <h2>Get Tailored  Tools</h2>
-        <p>Select your situation and get tailored recommendations for your classroom.</p>
-        <p>
-            @Html.ActionLink("Get Fit", "Tailor", "", new {@class="btn btn-default"})
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h2>Sign Up</h2>
-        <p>Create an account to save settings, bookmark tools, and provide suggestions to other teachers and educators. </p>
-        <p>
-            @*<a class="btn btn-default" href="#">Sign Up &raquo;</a>*@
-            @Html.ActionLink("Sign Up", "Login", "", new { @class = "btn btn-default" })
-        </p>
+</main>
+<div class="container body-content">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Explore</h2>
+            <p>
+                Jump to a list of all of our selected tools. Filter down the results by format, grade level, ranking and more!
+            </p>
+            <p>
+                @*<a class="btn btn-default" href="#">Go to List &raquo;</a>*@
+                @Html.ActionLink("Go to List", "Tailor", " ", new { @class = "btn btn-default" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get Tailored Tools</h2>
+            <p>Select your situation and get tailored recommendations for your classroom.</p>
+            <p>
+                @Html.ActionLink("Get Fit", "Tailor", "", new { @class = "btn btn-default" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>Sign Up</h2>
+            <p>Create an account to save settings, bookmark tools, and provide suggestions to other teachers and educators. </p>
+            <p>
+                @*<a class="btn btn-default" href="#">Sign Up &raquo;</a>*@
+                @Html.ActionLink("Sign Up", "Login", "", new { @class = "btn btn-default" })
+            </p>
+        </div>
     </div>
 </div>
