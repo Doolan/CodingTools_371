@@ -14,7 +14,7 @@ namespace CodingTools_371.Models
     public partial class get_ReviewsList_Result
     {
         public string Title { get; set; }
-        public Nullable<decimal> Rating { get; set; }
+        public Nullable<int> Rating { get; set; }
         public string Content { get; set; }
         public string Username { get; set; }
     }

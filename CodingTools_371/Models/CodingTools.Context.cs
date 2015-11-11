@@ -41,20 +41,6 @@ namespace CodingTools_371.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ToolList_Result>("get_ToolList");
         }
     
-        public virtual ObjectResult<get_ReviewList_Result> get_ReviewList()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewList_Result>("get_ReviewList");
-        }
-    
-        public virtual ObjectResult<get_Reviews1_Result> get_Reviews1(Nullable<int> toolId)
-        {
-            var toolIdParameter = toolId.HasValue ?
-                new ObjectParameter("ToolId", toolId) :
-                new ObjectParameter("ToolId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_Reviews1_Result>("get_Reviews1", toolIdParameter);
-        }
-    
         public virtual ObjectResult<get_TagList_Result> get_TagList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_TagList_Result>("get_TagList");
@@ -76,6 +62,77 @@ namespace CodingTools_371.Models
                 new ObjectParameter("ToolId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_ReviewsList_Result>("get_ReviewsList", toolIdParameter);
+        }
+    
+        public virtual int insert_review(Nullable<decimal> rating, string content, Nullable<int> toolID, Nullable<int> creatorID, string title)
+        {
+            var ratingParameter = rating.HasValue ?
+                new ObjectParameter("Rating", rating) :
+                new ObjectParameter("Rating", typeof(decimal));
+    
+            var contentParameter = content != null ?
+                new ObjectParameter("Content", content) :
+                new ObjectParameter("Content", typeof(string));
+    
+            var toolIDParameter = toolID.HasValue ?
+                new ObjectParameter("ToolID", toolID) :
+                new ObjectParameter("ToolID", typeof(int));
+    
+            var creatorIDParameter = creatorID.HasValue ?
+                new ObjectParameter("CreatorID", creatorID) :
+                new ObjectParameter("CreatorID", typeof(int));
+    
+            var titleParameter = title != null ?
+                new ObjectParameter("Title", title) :
+                new ObjectParameter("Title", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_review", ratingParameter, contentParameter, toolIDParameter, creatorIDParameter, titleParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> insert_user(string name, string email, string title, string username)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var titleParameter = title != null ?
+                new ObjectParameter("Title", title) :
+                new ObjectParameter("Title", typeof(string));
+    
+            var usernameParameter = username != null ?
+                new ObjectParameter("Username", username) :
+                new ObjectParameter("Username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("insert_user", nameParameter, emailParameter, titleParameter, usernameParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> submit_Quiz_Answers(Nullable<int> userId, Nullable<int> toolId, string title, Nullable<int> rating, string description)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var toolIdParameter = toolId.HasValue ?
+                new ObjectParameter("ToolId", toolId) :
+                new ObjectParameter("ToolId", typeof(int));
+    
+            var titleParameter = title != null ?
+                new ObjectParameter("Title", title) :
+                new ObjectParameter("Title", typeof(string));
+    
+            var ratingParameter = rating.HasValue ?
+                new ObjectParameter("Rating", rating) :
+                new ObjectParameter("Rating", typeof(int));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("submit_Quiz_Answers", userIdParameter, toolIdParameter, titleParameter, ratingParameter, descriptionParameter);
         }
     }
 }
