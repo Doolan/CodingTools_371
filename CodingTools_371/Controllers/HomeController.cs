@@ -4,12 +4,14 @@ using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Web.WebSockets;
 using CodingTools_371.Models;
+
 
 namespace CodingTools_371.Controllers
 {
@@ -111,6 +113,25 @@ namespace CodingTools_371.Controllers
 
             return new JavaScriptSerializer().Serialize(_ProjectInfoHelper(list));
         }
+
+        public int AddUser(string name, string email, string title, string username, string password)
+        {
+            var db = new codingtoolsdevEntities();
+
+            //encryption
+            byte[] salt = (new Rfc2898DeriveBytes(password, 64)).Salt;
+            byte[] hash = (new Rfc2898DeriveBytes(password, salt)).GetBytes(64);
+
+
+            if (name.Equals(null))
+                throw new InvalidDataException("Name cannot be null");
+            if (email.Equals(null))
+                throw new InvalidDataException("Email cannot be null");
+            if (username.Equals(null))
+                throw new InvalidDataException("Username cannot be null");
+
+            return db.insert_user(name, email, title, username, salt, hash);
+	}
 
         [HttpPost]
         public string SubmitReview(int userId, int toolId, string title, int rating, string description)

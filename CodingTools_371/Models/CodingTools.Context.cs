@@ -89,7 +89,7 @@ namespace CodingTools_371.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_review", ratingParameter, contentParameter, toolIDParameter, creatorIDParameter, titleParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> insert_user(string name, string email, string title, string username)
+        public virtual int insert_user(string name, string email, string title, string username, byte[] passwordHash, byte[] passwordSalt)
         {
             var nameParameter = name != null ?
                 new ObjectParameter("Name", name) :
@@ -107,7 +107,15 @@ namespace CodingTools_371.Models
                 new ObjectParameter("Username", username) :
                 new ObjectParameter("Username", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("insert_user", nameParameter, emailParameter, titleParameter, usernameParameter);
+            var passwordHashParameter = passwordHash != null ?
+                new ObjectParameter("PasswordHash", passwordHash) :
+                new ObjectParameter("PasswordHash", typeof(byte[]));
+    
+            var passwordSaltParameter = passwordSalt != null ?
+                new ObjectParameter("PasswordSalt", passwordSalt) :
+                new ObjectParameter("PasswordSalt", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("insert_user", nameParameter, emailParameter, titleParameter, usernameParameter, passwordHashParameter, passwordSaltParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> submit_Quiz_Answers(Nullable<int> userId, Nullable<int> toolId, string title, Nullable<int> rating, string description)
@@ -133,6 +141,23 @@ namespace CodingTools_371.Models
                 new ObjectParameter("Description", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("submit_Quiz_Answers", userIdParameter, toolIdParameter, titleParameter, ratingParameter, descriptionParameter);
+        }
+    
+        public virtual int get_user(string username, byte[] passwordHash, byte[] passwordSalt)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("Username", username) :
+                new ObjectParameter("Username", typeof(string));
+    
+            var passwordHashParameter = passwordHash != null ?
+                new ObjectParameter("PasswordHash", passwordHash) :
+                new ObjectParameter("PasswordHash", typeof(byte[]));
+    
+            var passwordSaltParameter = passwordSalt != null ?
+                new ObjectParameter("PasswordSalt", passwordSalt) :
+                new ObjectParameter("PasswordSalt", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("get_user", usernameParameter, passwordHashParameter, passwordSaltParameter);
         }
     }
 }

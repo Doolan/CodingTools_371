@@ -8,31 +8,63 @@
 <h2>Account Creation</h2>
 
 <div class="form-area">
-    <form data-example-id="simple-input-groups">
+    <form role="form" data-example-id="simple-input-groups">
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Username" data-bind="value: username" />
-        </div>
-        <br />
-
-        <div class="input-group input-group-lg" id="sizing-addon1">
-            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Email" data-bind="value: email" />
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Name" data-bind="value: name" required />
 
         </div>
         <br />
 
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Password" data-bind="value: password" />
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Email" data-bind="value: email" required />
 
         </div>
         <br />
 
         <div class="input-group input-group-lg" id="sizing-addon1">
-            <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Confirm Password" data-bind="value: confirmPassword" />
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Title" data-bind="value: title" />
 
         </div>
         <br />
 
-        @Html.ActionLink("Sign Up", "MakeAccount", "", new { @class = "btn btn-default btn-lg" })
+
+        <div class="input-group input-group-lg" id="sizing-addon1">
+            <input type="text" class="form-control" aria-describedby="sizing-addon1" placeholder="Username" data-bind="value: username" required />
+        </div>
+        <br />
+
+        <br />
+        <br />
+
+        <div class="input-group input-group-lg" id="sizing-addon1">
+            <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Password" data-bind="value: password" required />
+
+        </div>
+        <br />
+
+    @*
+    <div class="input-group input-group-lg" id="sizing-addon1">
+        <input type="password" class="form-control" aria-describedby="sizing-addon1" placeholder="Confirm Password" data-bind="value: confirmPassword" required />
+
+    </div>
+    <br />
+    *@
+
+
+    @*
+    @Html.ActionLink("Sign Up", "MakeAccount", "", new { @class = "btn btn-default btn-lg", onclick = "SubmitAddUser"})
+*@
+
+        @*
+        <input type="submit" class="btn btn-default btn-lg" aria-label="Left Align" id="login-but" value="Create Account" />
+        *@
+        
+        <button type="submit" class="btn btn-default btn-lg" aria-label="Left Align" id="login-but" data-bind="click: SubmitAddUser">
+            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+            Submit
+        </button>
+        
+
         @Html.ActionLink("Log In", "Index", "", new { @class = "btn btn-default btn-lg" })
 
         <!--<button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="login-but">
