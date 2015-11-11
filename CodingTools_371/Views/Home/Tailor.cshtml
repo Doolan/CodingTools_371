@@ -45,13 +45,15 @@
                                         </label>
                                     </div>
                                 </div>
-                                <!-- ko if: gradesShortView-->
-                                <p class="toggleMoreLess" data-bind="click:gradesToggle">Show more</p>
-                                <!-- /ko -->
-                                <!-- ko if: gradesLongView -->
-                                <p class="toggleMoreLess" data-bind="click:gradesToggle">Show less</p>
-                                <!-- /ko -->
-                            </div>
+                                <div data-bind=" if: gradesShortView">
+                                    <p class="toggleMoreLess" data-bind="click:gradesToggle">Show more</p>
+                                </div>
+                                
+                                <div data-bind=" if: gradesLongView">
+                                    <p class="toggleMoreLess" data-bind="click:gradesToggle">Show less</p>
+                                    
+                                </div>
+                              </div>
                         </div>
                         <div class="panel panel-primary">
                             <div class="panel-heading">Technology</div>
