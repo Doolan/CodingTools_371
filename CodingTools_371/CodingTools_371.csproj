@@ -236,6 +236,7 @@
     <Compile Include="Models\Tool.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ToolModel.cs" />
     <Compile Include="Models\ToolTag.cs">
       <DependentUpon>CodingTools.tt</DependentUpon>
     </Compile>
@@ -252,6 +253,7 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\ReviewBox.css" />
     <Content Include="Content\ReviewCreation.css" />
+    <Content Include="Content\Tailor.css" />
     <Content Include="Content\Tools.css" />
     <Content Include="Images\CodingToolsIcon.png" />
     <Content Include="Images\CodingToolsLogo.png" />

@@ -2,7 +2,7 @@
 $(document).ready(function () {
     //window.KO_MODEL = ViewToolsMain(JSONSITEINFO);
     //ko.applyBindings(window.KO_MODEL);
-    $('.body-content').hide();
+    $('.tool-body').hide();
     var toolId = getUrlParameter('ID');
 
 
@@ -14,7 +14,7 @@ $(document).ready(function () {
         success: function (data) {
             window.KO_MODEL = ViewToolsMain(data);
             ko.applyBindings(window.KO_MODEL);
-            $('.body-content').show();
+            $('.tool-body').show();
         },
         error: function (request, status, error) {
             console.log('failed get', request, status, error);
@@ -87,13 +87,14 @@ var ViewToolsMain = function (data) {
     self.name = data.Name;
     self.url = data.Url;
     self.imageUrl = data.ImgPath;
-   // self.reviews = data.reviews;
+    self.nameLink = 'Go to ' + self.name;
     self.desc = data.Description;
+    self.nameLink = 'Go to ' + self.name;
     self.tags = ko.observableArray($.map(data.Tags, function (text) { return new Tag(text) }));
-
+    self.chart = ko.observable();
     self.showReviews = ko.observable(false);
     self.reviewArray = ko.observableArray([]);
-
+    
     self.modal = ko.observable(new ReviewModal(self));
 
     self.loadReviews = function() {
@@ -104,7 +105,7 @@ var ViewToolsMain = function (data) {
             dataType: 'JSON',
             success: function (data) {
                 console.log(data);
-                self.reviewArray($.map(data, function (text) { return new Review(text) }));
+                self.updateReviewData(data);
                 self.showReviews(true);
                 console.log(self.reviewArray());
             },
@@ -114,11 +115,94 @@ var ViewToolsMain = function (data) {
         });
     };
 
+    self.updateReviewData =  function(data)
+    {
+        self.reviewArray($.map(data.Reviews, function (text) { return new Review(text) }));
+        self.chart(new Chart(data.Chart));
+    }
+
     self.loadReviews();
 };
 
+var Bars = function (text) {
+    //constants
+    var self = this;
+   // self.isRange = isRange;
+    self.label = text.Label;
+    self.color = text.ColorCode;
+    self.rankingWord = text.RankingWord;
+    self.displayLabel = ko.computed({
+        read: function () {
+            if (self.isRange) {
+                if (self.label > 1)
+                    return '> ' + (self.label - 1) + ' ' + text.RankingWord;
+                else {
+                    return self.label + ' ' + text.RankingWord;
+                }
+            }
+            return self.label + ' - ' + text.RankingWord;
+        }
+    });
+
+    //observables
+    self.count = ko.observable(text.NumberOfScore);
+    self.width = ko.observable(text.Width);
+    //self.toolTip = ko.observable(text.NumberOfScore > 1 ? text.NumberOfScore + ' ' + text.RankingWord + ' rankings' : text.NumberOfScore + ' ' + text.RankingWord + ' ranking');
+
+    self.displayCount = ko.computed({
+        read: function () {
+            return self.count();
+        },
+        write: function (value) {
+            self.count(value);
+            //self.toolTip(value > 1 ? value + ' ' + self.rankingWord + ' rankings' : value + ' ' + self.rankingWord + ' ranking');
+        }
+    });
 
 
+    self.displayWidth = ko.computed({
+        read: function () {
+            return self.width().toFixed(2) + '%';
+        },
+        write: function (value) {
+            self.width(value * 100);
+        }
+    });
+}
+
+var Chart = function(text) {
+    var self = this;
+    self.bar = ko.observableArray($.map(text.Rows, function(rows) { return new Bars(rows) }));
+    self.averageScore = ko.observable(text.AverageScore);
+    self.rankingWord = ko.observable(text.RankingWord);
+    self.displayScore = ko.computed({
+        read: function() {
+            return self.averageScore().toFixed(2);
+        },
+        write: function(value) {
+            self.averageScore(value);
+            self.displayRankingWord(value);
+        }
+    });
+
+    self.displayRankingWord = ko.computed({
+        read: function() {
+            return self.rankingWord();
+        },
+        write: function(value) {
+            var rankingWords = ['', 'Very Poor', 'Poor', 'Fair', 'Good', 'Very Good'];
+            var floor = Math.floor(value);
+            var ceiling = Math.ceil(value);
+            if (floor === ceiling)
+                self.rankingWord(rankingWords[floor]);
+            else
+                self.rankingWord(rankingWords[floor] + ' - ' + rankingWords[ceiling]);
+        }
+    });
+
+
+    self.rankingWords = text.RankingWord;
+}
 
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),

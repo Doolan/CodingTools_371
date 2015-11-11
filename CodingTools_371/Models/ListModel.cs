@@ -55,29 +55,6 @@ namespace CodingTools_371.Models
 
     #endregion
 
-    #region GetProjectInfo
-
-    public class ToolInfo
-    {
-        public class Tool
-        {
-            public int ToolId { get; set; }
-            public string Name { get; set; }
-            public string Url { get; set; }
-            public string Description { get; set; }
-            public string ImgPath { get; set; }
-            public List<Tag> Tags { get; set; }
-        }
-
-        public class Tag
-        {
-            public int TagId { get; set; }
-            public string TagName { get; set; }
-            public string TagValue { get; set; }
-        }
-    }
-
-    #endregion
 
 
 }

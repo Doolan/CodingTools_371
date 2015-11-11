@@ -1,0 +1,17 @@
+﻿body {
+}
+
+.toggleMoreLess {
+    text-decoration: underline;
+    color: grey;
+    font-size: .85em;
+}
+
+.toggleMoreLess:hover {
+    color: lightblue;
+    cursor: pointer;
+}
+#gradesOptions {
+    overflow: hidden;
+   
+}

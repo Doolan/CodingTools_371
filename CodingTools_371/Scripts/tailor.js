@@ -5,7 +5,7 @@ var KO_MODEL;
 $(document).ready(function () {
     //window.KO_MODEL = TailorMainModel({ "gradeArray": JSONGRADEARRAY, "technology": JSONTECHDATA, "toolList": JSONLISTDATA });
     //ko.applyBindings(window.KO_MODEL);
-    $('.body-content').hide();
+    $('.tailor-body').hide();
     $.ajax({
         url: 'GetToolList',
         type: 'GET',
@@ -14,7 +14,7 @@ $(document).ready(function () {
             console.log(data);
             window.KO_MODEL = TailorMainModel(data);
             ko.applyBindings(window.KO_MODEL);
-            $('.body-content').show();
+            $('.tailor-body').show();
         },
         error: function(request, status, error) {
             console.log('failed get', request, status, error);
@@ -93,8 +93,6 @@ var TailorMainModel = function (data) {
     self.gradeView = ko.observable(false);
     self.techView = ko.observable(false);
     self.listView = ko.observable(false);
-   // self.gradeArray = ko.observableArray($.map(data.gradeArray, function (text) { return new FilterOption(text,self) }));
-   // self.tech = ko.observableArray($.map(data.technology, function (text) { return new FilterOption(text, self) }));
     self.gradeArray = ko.observableArray([]);
     self.tech = ko.observableArray([]);
     self.codeTypeArray = ko.observableArray([]);
@@ -114,6 +112,7 @@ var TailorMainModel = function (data) {
             }
         }
     }
+
     self.SetFilterOptions(data.TagList);
 
     self.tailorAdvanceClick = function() {
@@ -169,11 +168,28 @@ var TailorMainModel = function (data) {
 
     //move to onload later
     self.gradeView = ko.observable(true);
-    if (getUrlParameter('Length') != 0) {
+    if (getUrlParameter('Length') !== 0) {
         self.skipToList();
     }
-};
 
+    /** ---- List Length toggling   ---------**/
+    self.gradesShortView = ko.observable(true);
+    self.gradesLongView = ko.observable(false);
+
+    self.gradesToggle = function () {
+        console.log('hit');
+        if (self.gradesShortView()) {
+            self.gradesShortView(false);
+            self.gradesLongView(true);
+            $('#gradesOptions').css({ 'max-height': '' });
+        } else {
+            self.gradesShortView(true);
+            self.gradesLongView(false);
+            $('#gradesOptions').css({ 'max-height': '10em' });
+        }
+    }
+
+};
 
 var filterArrayProperty = function (array, value) {
     if (array != null && array.length > 0) {
