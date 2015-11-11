@@ -21,7 +21,7 @@ namespace CodingTools_371.Models
         }
     
         public int ReviewId { get; set; }
-        public Nullable<decimal> Rating { get; set; }
+        public Nullable<int> Rating { get; set; }
         public string Content { get; set; }
         public int ToolID { get; set; }
         public int CreatorID { get; set; }

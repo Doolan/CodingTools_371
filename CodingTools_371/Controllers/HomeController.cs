@@ -15,6 +15,7 @@ namespace CodingTools_371.Controllers
 {
     public class HomeController : Controller
     {
+        #region PageCalls
         public ActionResult Index()
         {
             return View();
@@ -63,6 +64,7 @@ namespace CodingTools_371.Controllers
         {
             return View();
         }
+        #endregion
 
         #region AJAX CALLS
 
@@ -92,11 +94,8 @@ namespace CodingTools_371.Controllers
             return new JavaScriptSerializer().Serialize(list);
         }
 
-        
-
+        [HttpGet]
         public string GetProjectInfo(string toolIdString)
-
-        
         {
             int toolId;
             if (!int.TryParse(toolIdString, out toolId))
@@ -106,6 +105,14 @@ namespace CodingTools_371.Controllers
             var list = db.get_Tool_Page(toolId).ToList();
             
             return new JavaScriptSerializer().Serialize(_ProjectInfoHelper(list));
+        }
+
+        [HttpPost]
+        public string SubmitReview(int userId, int toolId, string title, int rating, string description)
+        {
+            var db = new codingtoolsdevEntities();
+            var reviewId = db.submit_Quiz_Answers(userId, toolId, title, rating, description);
+            return GetReviewList(toolId+"");
         }
 
         #region helper Methods
