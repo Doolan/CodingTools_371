@@ -168,7 +168,8 @@ var TailorMainModel = function (data) {
 
     //move to onload later
     self.gradeView = ko.observable(true);
-    if (getUrlParameter('Length') !== 0) {
+    if (getUrlParameter('Length') != 0) {
+        console.log(getUrlParameter('Length'));
         self.skipToList();
     }
 
