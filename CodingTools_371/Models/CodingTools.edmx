@@ -68,6 +68,8 @@
           <Property Name="Email" Type="nvarchar(max)" />
           <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="Username" Type="nvarchar" MaxLength="20" />
+          <Property Name="PasswordHash" Type="binary" MaxLength="64" />
+          <Property Name="PasswordSalt" Type="binary" MaxLength="64" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -191,6 +193,8 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Parameter Name="Email" Type="nvarchar" Mode="In" />
           <Parameter Name="Title" Type="nvarchar" Mode="In" />
           <Parameter Name="Username" Type="nvarchar" Mode="In" />
+          <Parameter Name="PasswordHash" Type="binary" Mode="In" />
+          <Parameter Name="PasswordSalt" Type="binary" Mode="In" />
         </Function>
         <Function Name="submit_Quiz_Answers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserId" Type="int" Mode="In" />
@@ -331,6 +335,8 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_ToUsers" FromRole="Users" ToRole="Reviews" />
+          <Property Name="PasswordHash" Type="Binary" MaxLength="64" FixedLength="true" />
+          <Property Name="PasswordSalt" Type="Binary" MaxLength="64" FixedLength="true" />
         </EntityType>
         <EntityType Name="Tool_View">
           <Key>
@@ -489,6 +495,8 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Title" Mode="In" Type="String" />
             <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="PasswordHash" Mode="In" Type="Binary" />
+            <Parameter Name="PasswordSalt" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="submit_Quiz_Answers" ReturnType="Collection(Decimal)">
             <Parameter Name="UserId" Mode="In" Type="Int32" />
@@ -619,6 +627,8 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="codingtoolsdevModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

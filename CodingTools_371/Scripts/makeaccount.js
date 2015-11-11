@@ -12,7 +12,7 @@ var AppViewModel = function () {
     self.email = ko.observable();
     self.title = ko.observable();
     self.username = ko.observable();
-    //self.password = ko.observable();
+    self.password = ko.observable();
     //self.confirmPassword = ko.observable();
 
 
@@ -26,6 +26,8 @@ var AppViewModel = function () {
         console.log("email " + self.email());
         console.log("title " + self.title());
         console.log("username " + self.username());
+        console.log("password " + self.password());
+        //console.log("confirmPassword " + self.confirmPassword());
 
         $.ajax({
             url: 'AddUser',
@@ -34,7 +36,8 @@ var AppViewModel = function () {
                 'Name': self.name(),
                 'Email': self.email(),
                 'Title': self.title(),
-                'Username': self.username()
+                'Username': self.username(),
+                'Password': self.password()
             },
             dataType: 'JSON',
             success: function (data) {
