@@ -118,17 +118,18 @@ namespace CodingTools_371.Controllers
         {
             var db = new codingtoolsdevEntities();
 
-            //encryption
-            byte[] salt = (new Rfc2898DeriveBytes(password, 64)).Salt;
-            byte[] hash = (new Rfc2898DeriveBytes(password, salt)).GetBytes(64);
-
-
             if (name.Equals(null))
                 throw new InvalidDataException("Name cannot be null");
             if (email.Equals(null))
                 throw new InvalidDataException("Email cannot be null");
             if (username.Equals(null))
                 throw new InvalidDataException("Username cannot be null");
+            if (password.Equals(null))
+                throw new InvalidDataException("Password cannot be null");
+
+            //encryption
+            byte[] salt = (new Rfc2898DeriveBytes(password, 64)).Salt;
+            byte[] hash = (new Rfc2898DeriveBytes(password, salt)).GetBytes(64);
 
             return db.insert_user(name, email, title, username, salt, hash);
 	}
