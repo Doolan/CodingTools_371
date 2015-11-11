@@ -181,11 +181,6 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <Parameter Name="ToolId" Type="int" Mode="In" />
         </Function>
         <Function Name="get_ToolList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="get_user" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Username" Type="nvarchar" Mode="In" />
-          <Parameter Name="PasswordHash" Type="binary" Mode="In" />
-          <Parameter Name="PasswordSalt" Type="binary" Mode="In" />
-        </Function>
         <Function Name="insert_review" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Rating" Type="decimal" Mode="In" />
           <Parameter Name="Content" Type="nvarchar" Mode="In" />
@@ -510,11 +505,6 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
             <Parameter Name="Rating" Mode="In" Type="Int32" />
             <Parameter Name="Description" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="get_user">
-            <Parameter Name="Username" Mode="In" Type="String" />
-            <Parameter Name="PasswordHash" Mode="In" Type="Binary" />
-            <Parameter Name="PasswordSalt" Mode="In" Type="Binary" />
-          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="get_ToolList_Result">
           <Property Type="Int32" Name="ToolID" Nullable="false" />
@@ -716,7 +706,6 @@ warning 6002: The table/view 'codingtoolsdev.dbo.Tool_View' does not have a prim
           <FunctionImportMapping FunctionImportName="insert_review" FunctionName="codingtoolsdevModel.Store.insert_review" />
           <FunctionImportMapping FunctionImportName="insert_user" FunctionName="codingtoolsdevModel.Store.insert_user" />
           <FunctionImportMapping FunctionImportName="submit_Quiz_Answers" FunctionName="codingtoolsdevModel.Store.submit_Quiz_Answers" />
-          <FunctionImportMapping FunctionImportName="get_user" FunctionName="codingtoolsdevModel.Store.get_user" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
