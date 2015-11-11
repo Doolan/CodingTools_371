@@ -269,13 +269,12 @@
     <Content Include="Images\Tailor\chromebook.jpg" />
     <Content Include="Images\Tailor\iPad.jpg" />
     <Content Include="Images\Tailor\windows.jpg" />
-    <Content Include="Images\Tool\Code.org.jpeg" />
-    <Content Include="Images\Tool\Codeacademy.jpg" />
-    <Content Include="Images\Tool\CodeCombat.com.jpg" />
-    <Content Include="Images\Tool\hopscotch.jpg" />
-    <Content Include="Images\Tool\kodable.com.jpg" />
-    <Content Include="Images\Tool\scratch.jpg" />
-    <Content Include="Images\Tool\stencyle.com.jpg" />
+    <Content Include="Images\Tool\Code.org.png" />
+    <Content Include="Images\Tool\Codeacademy.svg" />
+    <Content Include="Images\Tool\CodeCombat.com.png" />
+    <Content Include="Images\Tool\hopscotch.png" />
+    <Content Include="Images\Tool\kodable.com.png" />
+    <Content Include="Images\Tool\scratch.png" />
     <Content Include="Models\CodingTools.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CodingTools.edmx</DependentUpon>
