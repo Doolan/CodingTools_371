@@ -142,5 +142,22 @@ namespace CodingTools_371.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("submit_Quiz_Answers", userIdParameter, toolIdParameter, titleParameter, ratingParameter, descriptionParameter);
         }
+    
+        public virtual int get_user(string username, byte[] passwordHash, byte[] passwordSalt)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("Username", username) :
+                new ObjectParameter("Username", typeof(string));
+    
+            var passwordHashParameter = passwordHash != null ?
+                new ObjectParameter("PasswordHash", passwordHash) :
+                new ObjectParameter("PasswordHash", typeof(byte[]));
+    
+            var passwordSaltParameter = passwordSalt != null ?
+                new ObjectParameter("PasswordSalt", passwordSalt) :
+                new ObjectParameter("PasswordSalt", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("get_user", usernameParameter, passwordHashParameter, passwordSaltParameter);
+        }
     }
 }
