@@ -7,109 +7,169 @@
 <link rel="stylesheet" href="~/Content/ReviewBox.css" />
 <script type="text/javascript" src="../../scripts/tool.js"></script>
 
-<a href="#" data-bind="attr:{href: url}" target="_blank" id="link">
-    <div class="jumbotron" data-bind="style: {backgroundImage: 'url(' + imageUrl +')'}">
-        <div class="container">
-            <!-- <h1 data-bind="text: siteInfo().name"></h1> -->
+<div class="body tool-body">
+    <main class="masthead" role="main" tabindex="-1">
+        <div class="container masthead-container">
+
+            <h1>
+                <img alt="Brand" data-bind="attr: {src: imageUrl}" style="height: 5em; max-width: 75%" />
+            </h1>
+            <br />
+            @*<p class="lead" data-bind="text:desc"></p>*@
+            <h2>
+                <a class="masthead-link" data-bind="attr:{href:url}, text: nameLink"></a>
+            </h2>
         </div>
-    </div>
-</a>
+    </main>
 
-<div class="container">
-    <h1 style="text-align: left" data-bind="text:name"></h1>
-    <br/>
-    <div class=" tags-container" data-bind="foreach:tags">
-        <div class="btn btn-default" data-bind="text:name"></div>
-    </div>
-    <br/>
-    <div id="about" data-bind="text: desc">
+    <div class="container body-content">
 
-    </div>
-    <br/>
-    
-</div>
+        
+            <h2>About</h2>
+            @*<h1 style="text-align: left" data-bind="text:name"></h1>*@
 
-<div class="container review-box">
-    <h2 class="pull-left" style="margin-top:.2em">Reviews</h2>
-    <button type="button" class="btn btn-info btn-lg pull-right" data-toggle="modal" data-target="#reviewModal">Write a Review</button>
+            <div id="about" data-bind="text: desc">
 
-    <div data-bind="foreach:reviewArray()" style="clear: both">
-        <br />
-        <div class="review">
-            <h4 class="review-title"><strong data-bind="text: title"></strong> - <span data-bind="text:ratingDisplay"></span></h4>
+            </div>
+            <br />
+            @*<div class=" tags-container" data-bind="foreach:tags">
+                <div class="btn btn-default" data-bind="text:name"></div>
+            </div>*@
+            @*<br />
+                <div id="about" data-bind="text: desc">
 
-
-            @*<div class="rating-and-tags">
-                    <fieldset class="rating" disabled>
-                        <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
-                        <input type="radio" id="star4" name="rating" value="4" checked="checked" /><label for="star4" title="Pretty good">4 stars</label>
-                        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
-                        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
-                        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
-                    </fieldset>
                 </div>*@
+            <br />
 
-            <div class="review-details">
-                <p>
-                    <strong data-bind="text: username"></strong> @*| <em data-bind="text: reviewDate"></em>*@
-                </p>
-                <p data-bind="text: content"></p>
-            </div>
-        </div>
-    </div>
-</div>
-<!--Review Modal-->
-<div id="reviewModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Write a Review for <span data-bind="text:name"></span></h4>
-            </div>
-            <div class="modal-body">
-                <form id="modal-form">
-                    <input class="form-control-static form-control" required placeholder="Review Title" maxlength="35" style="margin-bottom: 1em" data-bind="value: modal().title" />
-                    <div class="radio-group" style="display: inline">
-                        <div class="radio-box">
-                            <label>
-                                <input type="radio" name="modal-rating" required value="5" data-bind="checked: modal().rating" />
-                                5
-                            </label>
-                        </div>
-                        <div class="radio-box">
-                            <label>
-                                <input type="radio" name="modal-rating" required value="4" data-bind="checked: modal().rating" />
-                                4
-                            </label>
-                        </div>
-                        <div class="radio-box">
-                            <label>
-                                <input type="radio" name="modal-rating" required value="3" data-bind="checked: modal().rating" />
-                                3
-                            </label>
-                        </div>
-                        <div class="radio-box">
-                            <label>
-                                <input type="radio" name="modal-rating" required value="2" data-bind="checked: modal().rating"/>
-                                2
-                            </label>
-                        </div>
-                        <div class="radio-box">
-                            <label>
-                                <input type="radio" name="modal-rating" required value="1" data-bind="checked: modal().rating" />
-                                1
-                            </label>
+        <div class="container" data-bind="if:showReviews">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    @*col-sm-12 col-sm-offset-0">*@
+                    <div class=" tags-container" data-bind="foreach:tags">
+                        <div class="btn btn-default" data-bind="text:name"></div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    @*col-sm-12 col-sm-offset-0">*@
+                    <div class="avg-rating-big">
+                        <h1 data-bind="text: chart().displayScore"></h1>
+                        <h4 data-bind="text:chart().rankingWords"></h4>
+                        <h4>(Average Rating)</h4>
+                    </div>
+                </div>
+                <div class="col-lg-5  col-md-12 col-sm-12" style="overflow: hidden">
+                    @* Build chart *@
+                    <div class="chart-container" data-bind="foreach: chart().bar">
+                        <div class="chart-row">
+                            <span class="bar-label" data-bind="html: displayLabel"></span>
+                            <span class="bar" data-bind="style:{background: color, width:displayWidth}"></span>
+                            <span class="bar-count" data-bind="text: displayCount"></span>
                         </div>
                     </div>
-                    <textarea class="form-control-static form-control" rows="3" maxlength=" 240" data-bind="value: modal().description" placeholder="Review Description" style="margin-top: 1em"></textarea>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default"  data-bind="click: modal().submitReview">Submit</button> @*data-dismiss="modal"*@
+                </div>
             </div>
         </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="container review-box" data-bind="if:showReviews">
+            <h2 class="pull-left" style="margin-top:.2em">Reviews</h2>
+            <button type="button" class="btn btn-info btn-lg pull-right" data-toggle="modal" data-target="#reviewModal">Write a Review</button>
+
+            <div data-bind="foreach:reviewArray()" style="clear: both">
+                <br />
+                <div class="review">
+                    <h4 class="review-title"><strong data-bind="text: title"></strong> - <span data-bind="text:ratingDisplay"></span></h4>
+
+
+                    @*<div class="rating-and-tags">
+                            <fieldset class="rating" disabled>
+                                <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
+                                <input type="radio" id="star4" name="rating" value="4" checked="checked" /><label for="star4" title="Pretty good">4 stars</label>
+                                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
+                                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
+                                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
+                            </fieldset>
+                        </div>*@
+
+                    <div class="review-details">
+                        <p>
+                            <strong data-bind="text: username"></strong> @*| <em data-bind="text: reviewDate"></em>*@
+                        </p>
+                        <p data-bind="text: content"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Review Modal-->
+        <div id="reviewModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Write a Review for <span data-bind="text:name"></span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="modal-form">
+                            <input class="form-control-static form-control" required placeholder="Review Title" maxlength="35" style="margin-bottom: 1em" data-bind="value: modal().title" />
+                            <div class="radio-group" style="display: inline">
+                                <div class="radio-box">
+                                    <label>
+                                        <input type="radio" name="modal-rating" required value="5" data-bind="checked: modal().rating" />
+                                        5
+                                    </label>
+                                </div>
+                                <div class="radio-box">
+                                    <label>
+                                        <input type="radio" name="modal-rating" required value="4" data-bind="checked: modal().rating" />
+                                        4
+                                    </label>
+                                </div>
+                                <div class="radio-box">
+                                    <label>
+                                        <input type="radio" name="modal-rating" required value="3" data-bind="checked: modal().rating" />
+                                        3
+                                    </label>
+                                </div>
+                                <div class="radio-box">
+                                    <label>
+                                        <input type="radio" name="modal-rating" required value="2" data-bind="checked: modal().rating" />
+                                        2
+                                    </label>
+                                </div>
+                                <div class="radio-box">
+                                    <label>
+                                        <input type="radio" name="modal-rating" required value="1" data-bind="checked: modal().rating" />
+                                        1
+                                    </label>
+                                </div>
+                            </div>
+                            <textarea class="form-control-static form-control" rows="3" maxlength=" 240" data-bind="value: modal().description" placeholder="Review Description" style="margin-top: 1em"></textarea>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bind="click: modal().submitReview">Submit</button> @*data-dismiss="modal"*@
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
